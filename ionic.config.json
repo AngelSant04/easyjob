@@ -1,0 +1,7 @@
+{
+  "name": "easyjob",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
