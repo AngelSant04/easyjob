@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { usuarios } from 'src/environments/globales';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage,ref,uploadBytes ,getDownloadURL,getStorage} from '@angular/fire/storage';
+import { Usuario } from '../../interfaces/Usuario';
+import { ImagenesService } from '../../services/imagenes.service';
 @Component({
   selector: 'app-registro-usuario',
   templateUrl: './registro-usuario.page.html',
@@ -11,16 +13,7 @@ import { Storage,ref,uploadBytes ,getDownloadURL,getStorage} from '@angular/fire
 export class RegistroUsuarioPage implements OnInit {
   mostrar: string = 'password';
   bandera!: boolean;
-  usuario = {
-    nombres: '',
-    apellidos: '',
-    celular: '',
-    fechaNacimiento: '',
-    usuario: '',
-    correo: '',
-    clave: '',
-  };
-
+  usuario!:Usuario;
   mensajeNombre: string = '';
   mensajeApellido: string = '';
   mensajeTelefono: string = '';
@@ -28,7 +21,7 @@ export class RegistroUsuarioPage implements OnInit {
   mensajeUsuario: string = '';
   mensajeClave: string = '';
 
-  constructor(private router: Router, private alertCtrl: AlertController,private storage:Storage) {}
+  constructor(private router: Router, private alertCtrl: AlertController,private imagensrv:ImagenesService) {}
 
   ngOnInit() {
     this.mostrar === 'password'
@@ -49,8 +42,8 @@ export class RegistroUsuarioPage implements OnInit {
   async registrar() {
     if (!this.showErros()) return;
 
-    let user = environment.usuarios.find(
-      (user) => user.usuario === this.usuario.usuario
+    let user = usuarios.find(
+      (user:Usuario) => user.usuario === this.usuario.usuario
     );
 
     if (user) {
@@ -64,7 +57,7 @@ export class RegistroUsuarioPage implements OnInit {
 
       await alert.present();
     } else {
-      environment.usuarios.push(this.usuario);
+      usuarios.push(this.usuario);
 
       // this.router.navigate(['tabs'])
     }
@@ -108,20 +101,7 @@ export class RegistroUsuarioPage implements OnInit {
   };
 
   guardarImagen = async (_event: any) => {
-
-    let file = _event.target.files![0];
-    const imgRef= ref(this.storage,`images/${file.name}`)
-    await uploadBytes(imgRef,file).then(resp=>console.log(resp)).catch(err=>console.log(err));
-    const storage = getStorage();
-    console.log(file.name);
-    await getDownloadURL(ref(storage, `images/${file.name}`))
-    .then((url) => {
-      console.log('SOY:',url);
-  })
-  .catch((error) => {
-    // Handle any errors
-  });
-    
+    this.imagensrv.guardarImagen(_event);
   };
 
 }

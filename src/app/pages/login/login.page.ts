@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { environment } from 'src/environments/environment';
+import { usuarios } from 'src/environments/globales';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginPage implements OnInit{
 
     if (!this.showErros()) return
 
-    let user = environment.usuarios.find( user => user.usuario === this.usuario && user.clave === this.password);
+    let user = usuarios.find( user => user.usuario === this.usuario && user.clave === this.password);
 
     if (user) {
       this.router.navigate(['tabs'])
