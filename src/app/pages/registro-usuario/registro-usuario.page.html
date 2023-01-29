@@ -91,13 +91,14 @@
         <ion-accordion-group>
           <ion-accordion value="start">
             <ion-item slot="header">
-              <ion-label>Fecha de Nacimiento</ion-label>
+              <ion-label> Fecha de Nacimiento</ion-label>
               <ion-note slot="end"></ion-note>
             </ion-item>
             <ion-datetime
-              id="datetime"
+              id="date"
               slot="content"
               presentation="date"
+              [(ngModel)]="usuario.fechaNacimiento"
             ></ion-datetime>
           </ion-accordion>
         </ion-accordion-group>

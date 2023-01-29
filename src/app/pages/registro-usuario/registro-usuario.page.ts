@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Usuario } from '../../interfaces/Usuario';
 import { ImagenesService } from '../../services/imagenes.service';
+import { format, parseISO } from 'date-fns';
 @Component({
   selector: 'app-registro-usuario',
   templateUrl: './registro-usuario.page.html',
