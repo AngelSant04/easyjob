@@ -13,12 +13,12 @@ export class ImagenesService {
       .then((resp) => console.log(resp))
       .catch((err) => console.log(err));
     const storage = getStorage();
-    return await getDownloadURL(ref(storage, `images/${file.name}`))
+    return await (getDownloadURL(ref(storage, `images/${file.name}`))
       .then((url) => {
         return url || '' ;
       }) 
       .catch((error) => {
         console.log('ERRROR:', error);
-      }) ;
+      })) ;
   }
 }

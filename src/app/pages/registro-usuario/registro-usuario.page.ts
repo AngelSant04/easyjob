@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { usuarios } from 'src/environments/globales';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { Storage,ref,uploadBytes ,getDownloadURL,getStorage} from '@angular/fire/storage';
 import { Usuario } from '../../interfaces/Usuario';
 import { ImagenesService } from '../../services/imagenes.service';
 @Component({
@@ -13,7 +12,18 @@ import { ImagenesService } from '../../services/imagenes.service';
 export class RegistroUsuarioPage implements OnInit {
   mostrar: string = 'password';
   bandera!: boolean;
-  usuario!:Usuario;
+  usuario:Usuario={
+    nombres:'',
+    apellidos:'',
+    celular:'',
+    fechaNacimiento:'',
+    usuario:'',
+    correo:'',
+    clave:'',
+
+  };
+  previewProfle:any;
+  imageSrc!: any;
   mensajeNombre: string = '';
   mensajeApellido: string = '';
   mensajeTelefono: string = '';
@@ -99,9 +109,19 @@ export class RegistroUsuarioPage implements OnInit {
   openFileDialog = () => {
     (document as any).getElementById('file-upload').click();
   };
+  cargarImagen(_event: any){
+    if (_event.target.files && _event.target.files[0]) {
+      const file = _event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewProfle= reader.result;
+      }
+      reader.readAsDataURL(file);
+  }
 
+  }
   guardarImagen = async (_event: any) => {
-    this.imagensrv.guardarImagen(_event);
+    // if(_event.target.files![0])this.imagensrv.guardarImagen(_event);
   };
 
 }
