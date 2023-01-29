@@ -4,3 +4,8 @@ export const usuarios:Usuario[]=[
     { nombres: 'Piero', apellidos: 'Salazar Calle', celular: '923937155', fechaNacimiento: '2000-12-04', usuario: 'piero', correo: 'pieromental@gmail.com', clave:'123'},
   ]
   
+
+
+
+
+
