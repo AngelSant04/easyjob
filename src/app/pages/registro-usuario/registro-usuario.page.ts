@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Usuario } from '../../interfaces/Usuario';
-import { format, parseISO } from 'date-fns';
 import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
