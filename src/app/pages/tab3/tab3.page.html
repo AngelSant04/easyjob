@@ -1,16 +1,34 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border" mode="ios" translucent>
   <ion-toolbar>
-    <ion-title>
-      Tab 3
+    <ion-title class="ion-text-capitalize ion-text-center cabecera textoTitulo">
+      Mis Tareas
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-text-center " [fullscreen]="true">
+
+  <div (click)="registrarTarea()">
+
+    <h3 style="padding-top: 10%;">Registrar Nueva Tarea</h3>
+
+    <div class="cajaImagen">
+      <ion-img class="img" src="/assets/lista-de-deseos.png"></ion-img>
+    </div>
+
+
+    <h6 style="padding: 0 10px;">Si buscas contratar a alguien para que te ayude con alguna tarea puedes registrarla en este apartado y así los interesados pueden contactarte</h6>
+
+  </div>  
+
+  <div (click)="listarTareas()">
+    <h3 style="padding-top: 10%;">Listado de Tareas</h3>
+
+    <div class="cajaImagen">
+      <ion-img class="img" src="/assets/lista-de-verificacion.png"></ion-img>
+    </div>
+
+    <h6 style="padding: 0 10px;">Si deseas observar tus tareas registradas, modificar algun detalle de ellas,  calificar y pagar a tus trabajadores puedes hacerlo en este apartado</h6>
+  </div>  
 
 </ion-content>

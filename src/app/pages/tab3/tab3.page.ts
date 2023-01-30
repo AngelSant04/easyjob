@@ -9,4 +9,13 @@ export class Tab3Page {
 
   constructor() {}
 
+  registrarTarea(){
+    console.log("registrar");
+    
+  }
+
+  listarTareas(){
+    console.log("listar");
+  }
+
 }
