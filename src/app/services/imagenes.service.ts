@@ -8,10 +8,9 @@ export class ImagenesService {
 
   constructor(private storage:Storage) { }
   async guardarImagen(file: any) {
-    // let file = _event.target.files![0];
     const imgRef = ref(this.storage, `images/${file.name}`);
     await uploadBytes(imgRef, file)
-      .then((resp) => console.log(resp))
+      .then()
       .catch((err) => console.log(err));
     const storage = getStorage();
     return await (getDownloadURL(ref(storage, `images/${file.name}`))
@@ -19,6 +18,7 @@ export class ImagenesService {
         return url ;
       }) 
       .catch((error) => {
+        console.log(error);
         return '';
       })) ;
   }

@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/Usuario';
 import { collectionData, docData, Firestore } from '@angular/fire/firestore';
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
+import {addDoc, collection,deleteDoc,doc,updateDoc,} from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { ImagenesService } from './imagenes.service';
+import { Preferences } from '@capacitor/preferences';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,7 +13,6 @@ export class UsuariosService {
   constructor(private firestore: Firestore, private imgSrv: ImagenesService) {
     this.getUsuarios().subscribe((resp) => {
       this.listaUsuarios = resp;
-      console.log(this.listaUsuarios);
     });
   }
 
@@ -39,21 +33,33 @@ export class UsuariosService {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return deleteDoc(ref);
   }
-  validarUsuario(usuario: Usuario) {
-    let mensaje='';
-    console.log(this.listaUsuarios);
+  validarRegistro(usuario: Usuario) {
+    let mensaje = '';
     const validUser = this.listaUsuarios.find((user) => {
-     return user.correo==usuario.correo || user.usuario===usuario.usuario
+      return user.correo == usuario.correo || user.usuario === usuario.usuario;
     });
-    console.log(validUser);
-    if(validUser){
-      if(validUser.correo===usuario.correo){
-        mensaje='Correo'
-      }else{
-        mensaje='Nombre de Usuario'
+    if (validUser) {
+      if (validUser.correo === usuario.correo) {
+        mensaje = 'Correo';
+      } else {
+        mensaje = 'Nombre de Usuario';
       }
     }
-    console.log(mensaje);
     return mensaje;
+  }
+  async validarCuenta(usuario: string, password: string) {
+    const user=this.listaUsuarios.find(
+      (user) => user.usuario === usuario && user.clave === password
+    );
+    if(user){
+    await Preferences.set({
+      key: 'session',
+      value: JSON.stringify(user) ,
+    });
+      return true;
+    }else{
+      return false;
+    }
+
   }
 }

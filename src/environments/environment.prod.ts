@@ -9,11 +9,7 @@ export const environment = {
     authDomain: 'storageeasyjob.firebaseapp.com',
     messagingSenderId: '369119938369',
   },
-  production: true,
-  usuarios: [
-    { nombres: 'Angel', apellidos: 'Santamaria Herrera', celular: '97045532', fechaNacimiento: '2000-12-04', usuario: 'angel', correo: 'angelsantamaria0412@gmail.com', clave:'123'},
-    { nombres: 'Piero', apellidos: 'Salazar Calle', celular: '923937155', fechaNacimiento: '2000-12-04', usuario: 'pieromental', correo: 'pieromental@gmail.com', clave:'123456'},
-  ]
+  production: true
 }
 
 

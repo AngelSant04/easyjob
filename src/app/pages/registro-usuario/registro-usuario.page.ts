@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Usuario } from '../../interfaces/Usuario';
-import { ImagenesService } from '../../services/imagenes.service';
 import { format, parseISO } from 'date-fns';
 import { UsuariosService } from '../../services/usuarios.service';
 
@@ -25,6 +24,7 @@ export class RegistroUsuarioPage implements OnInit {
   };
   previewProfle: any;
   imgFile:any;
+  loading:any;
   mensajeNombre: string = '';
   mensajeApellido: string = '';
   mensajeTelefono: string = '';
@@ -35,8 +35,7 @@ export class RegistroUsuarioPage implements OnInit {
     private userSrv: UsuariosService,
     private router: Router,
     private alertCtrl: AlertController,
-    private imagensrv: ImagenesService,
-    
+    private loadingcrtl:LoadingController
   ) { }
 
   ngOnInit() {
@@ -54,22 +53,25 @@ export class RegistroUsuarioPage implements OnInit {
       this.bandera = true;
     }
   }
-
   async registrar() {
     if (!this.showErros()) return;
-    const validUser= this.userSrv.validarUsuario(this.usuario);
-    console.log(validUser);
+    const validUser= this.userSrv.validarRegistro(this.usuario);
     if(!validUser.length){
-      const resp= await this.userSrv.agregarUsuario(this.usuario,this.imgFile);
+      await this.presentLoading();
+      await this.userSrv.agregarUsuario(this.usuario,this.imgFile).then(resp=>{
+        this.loading.dismiss();
+      }).catch(err=>{
+        this.loading.dismiss();
+        throw err;
+      });
       const alert = await this.alertCtrl.create({
-        header: 'Bienvenido',
-        message: `Tu usuario ha sido registrado` ,
+        header: 'Registro Exitoso',
+        message: `Vuelve a iniciar sesión` ,
         buttons: ['Continuar'],
       });
       await alert.present();
       await alert.onDidDismiss();
-      this.usuario.usuario = '';
-      this.router.navigate(['tabs'])
+      this.router.navigate([''])
     }else{
       const alert = await this.alertCtrl.create({
         header: 'Error',
@@ -126,5 +128,12 @@ export class RegistroUsuarioPage implements OnInit {
       };
       reader.readAsDataURL(file);
     }
+  }
+  async presentLoading() {
+    this.loading = await this.loadingcrtl.create({
+      message: 'Procesando...',
+      duration: 20000
+    });
+    await this.loading.present();
   }
 }

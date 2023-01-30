@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { usuarios } from 'src/environments/globales';
-
+import { UsuariosService } from '../../services/usuarios.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,7 +18,8 @@ export class LoginPage implements OnInit{
 
   constructor(
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private userSrv: UsuariosService
   ) { }
 
   ngOnInit() {
@@ -29,23 +29,19 @@ export class LoginPage implements OnInit{
   async ingresar(){
 
     if (!this.showErros()) return
-
-    let user = usuarios.find( user => user.usuario === this.usuario && user.clave === this.password);
-
+    const user= await this.userSrv.validarCuenta(this.usuario,this.password);
     if (user) {
       this.router.navigate(['tabs'])
     } else {
       const alert = await this.alertCtrl.create({
-        header: 'Error !!',
+        header: 'Error',
         message: 'Usuario o Contraseña invalidas',
         buttons: ['OK'],
       });
-  
       await alert.present();
     }
 
   }
-
   verClave(){
 
     if (this.bandera) {
