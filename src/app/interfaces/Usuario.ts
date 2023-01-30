@@ -1,9 +1,11 @@
 export interface Usuario{
-    nombres: string,
+    id?:string,
+    nombres: string ,
     apellidos: string,
     celular: string,
     fechaNacimiento: string,
     usuario: string,
     correo: string,
-    clave: string,
+    clave: string
+    imgUsuario?:string,
 }
