@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { usuarios } from 'src/environments/globales';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Usuario } from '../../interfaces/Usuario';
 import { ImagenesService } from '../../services/imagenes.service';
 import { format, parseISO } from 'date-fns';
+import { UsuariosService } from '../../services/usuarios.service';
+
 @Component({
   selector: 'app-registro-usuario',
   templateUrl: './registro-usuario.page.html',
@@ -13,26 +14,30 @@ import { format, parseISO } from 'date-fns';
 export class RegistroUsuarioPage implements OnInit {
   mostrar: string = 'password';
   bandera!: boolean;
-  usuario:Usuario={
-    nombres:'',
-    apellidos:'',
-    celular:'',
-    fechaNacimiento:'',
-    usuario:'',
-    correo:'',
-    clave:'',
-
+  usuario: Usuario = {
+    nombres: '',
+    apellidos: '',
+    celular: '',
+    fechaNacimiento: '',
+    usuario: '',
+    correo: '',
+    clave: '',
   };
-  previewProfle:any;
-  imageSrc!: any;
+  previewProfle: any;
+  imgFile:any;
   mensajeNombre: string = '';
   mensajeApellido: string = '';
   mensajeTelefono: string = '';
   mensajeCorreo: string = '';
   mensajeUsuario: string = '';
   mensajeClave: string = '';
-
-  constructor(private router: Router, private alertCtrl: AlertController,private imagensrv:ImagenesService) {}
+  constructor(
+    private userSrv: UsuariosService,
+    private router: Router,
+    private alertCtrl: AlertController,
+    private imagensrv: ImagenesService,
+    
+  ) { }
 
   ngOnInit() {
     this.mostrar === 'password'
@@ -52,25 +57,26 @@ export class RegistroUsuarioPage implements OnInit {
 
   async registrar() {
     if (!this.showErros()) return;
-
-    let user = usuarios.find(
-      (user:Usuario) => user.usuario === this.usuario.usuario
-    );
-
-    if (user) {
+    const validUser= this.userSrv.validarUsuario(this.usuario);
+    console.log(validUser);
+    if(!validUser.length){
+      const resp= await this.userSrv.agregarUsuario(this.usuario,this.imgFile);
       const alert = await this.alertCtrl.create({
-        header: 'Error !!',
-        message: 'Nombre de Usuario ya existe. Pruebe con otro',
+        header: 'Bienvenido',
+        message: `Tu usuario ha sido registrado` ,
+        buttons: ['Continuar'],
+      });
+      await alert.present();
+      await alert.onDidDismiss();
+      this.usuario.usuario = '';
+      this.router.navigate(['tabs'])
+    }else{
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: `${validUser} ya existe. Pruebe con otro` ,
         buttons: ['OK'],
       });
-
-      this.usuario.usuario = '';
-
       await alert.present();
-    } else {
-      usuarios.push(this.usuario);
-
-      // this.router.navigate(['tabs'])
     }
   }
 
@@ -110,19 +116,15 @@ export class RegistroUsuarioPage implements OnInit {
   openFileDialog = () => {
     (document as any).getElementById('file-upload').click();
   };
-  cargarImagen(_event: any){
+  cargarImagen(_event: any) {
     if (_event.target.files && _event.target.files[0]) {
       const file = _event.target.files[0];
+      this.imgFile=file;
       const reader = new FileReader();
       reader.onload = () => {
-        this.previewProfle= reader.result;
-      }
+        this.previewProfle = reader.result;
+      };
       reader.readAsDataURL(file);
+    }
   }
-
-  }
-  guardarImagen = async (_event: any) => {
-    // if(_event.target.files![0])this.imagensrv.guardarImagen(_event);
-  };
-
 }

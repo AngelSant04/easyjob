@@ -1,4 +1,5 @@
 export interface Usuario{
+    id?:string,
     nombres: string ,
     apellidos: string,
     celular: string,
@@ -6,4 +7,5 @@ export interface Usuario{
     usuario: string,
     correo: string,
     clave: string
+    imgUsuario?:string,
 }
