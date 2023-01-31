@@ -1,0 +1,102 @@
+<ion-header class="ion-no-border" mode="ios" translucent>
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">
+      Registrar Tarea
+    </ion-title>
+  </ion-toolbar>
+</ion-header> 
+
+
+<ion-content class="ion-padding">
+  
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input placeholder="Ingrese Nombre" [(ngModel)]="tarea.nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <!-- <ion-label>Descripción</ion-label> -->
+      <ion-textarea
+        placeholder="Ingrese Descripción" [(ngModel)]="tarea.descripcion"
+      ></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item style="padding-top: 7px;">
+          <ion-select placeholder="Categoria">
+            <ion-select-option *ngFor="let item of listaCategoria" [value]="categoria">{{item.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Pago</ion-label>
+          <ion-input
+            placeholder="Pago" type="number" [(ngModel)]="tarea.pago"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-accordion-group>
+          <ion-accordion value="start">
+            <ion-item slot="header">
+              <ion-label> Fecha a Realizar</ion-label>
+              <ion-note slot="end"></ion-note>
+            </ion-item>
+            <ion-datetime
+              id="dateFecha"
+              slot="content"
+              presentation="date"
+            ></ion-datetime>
+          </ion-accordion>
+        </ion-accordion-group>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-accordion-group>
+          <ion-accordion value="start">
+            <ion-item slot="header">
+              <ion-label> Hora a Realizar</ion-label>
+              <ion-note slot="end"></ion-note>
+            </ion-item>
+            <ion-datetime
+              id="dateHora"
+              slot="content"
+              presentation="time"
+            ></ion-datetime>
+          </ion-accordion>
+        </ion-accordion-group>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Dirección</ion-label>
+      <ion-input placeholder="Ingrese Dirección" [(ngModel)]="tarea.direccion"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="cancel()" expand="block" fill="outline">
+          Volver
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="confirm()" expand="block">
+          Registrar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

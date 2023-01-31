@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'tipo-usuario',
     loadChildren: () => import('./pages/tipo-usuario/tipo-usuario.module').then( m => m.TipoUsuarioPageModule)
   },
+  {
+    path: 'info-registrar-tarea',
+    loadChildren: () => import('./pages/info-registrar-tarea/info-registrar-tarea.module').then( m => m.InfoRegistrarTareaPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-tarea.page';
 
 @Component({
   selector: 'app-tab3',
@@ -7,10 +9,16 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private modalCtrl: ModalController) {}
 
-  registrarTarea(){
-    console.log("registrar");
+  async registrarTarea(){
+    const modal = await this.modalCtrl.create({
+      component: InfoRegistrarTareaPage,
+    });
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss()
+    console.log(data);
     
   }
 
