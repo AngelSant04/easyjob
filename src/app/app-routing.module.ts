@@ -15,10 +15,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/registro-usuario/registro-usuario.module').then( m => m.RegistroUsuarioPageModule)
   },
   {
-    path: 'tipo-sesion',
-    loadChildren: () => import('./pages/tipo-sesion/tipo-sesion.module').then( m => m.TipoSesionPageModule)
-  },
-  {
     path: 'info-registrar-tarea',
     loadChildren: () => import('./pages/info-registrar-tarea/info-registrar-tarea.module').then( m => m.InfoRegistrarTareaPageModule)
   },

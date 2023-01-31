@@ -4,7 +4,6 @@ import { collectionData, docData, Firestore } from '@angular/fire/firestore';
 import {addDoc, collection,deleteDoc,doc,updateDoc,} from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { ImagenesService } from './imagenes.service';
-import { Preferences } from '@capacitor/preferences';
 @Injectable({
   providedIn: 'root',
 })
@@ -49,16 +48,12 @@ export class UsuariosService {
   }
   async validarCuenta(usuario: string, password: string) {
     const user=this.listaUsuarios.find(
-      (user) => user.usuario === usuario && user.clave === password
+      (user) =>user.usuario === usuario && user.clave === password
     );
     if(user){
-    await Preferences.set({
-      key: 'session',
-      value: JSON.stringify(user) ,
-    });
-      return true;
+      return user.id;
     }else{
-      return false;
+      return ' ';
     }
 
   }

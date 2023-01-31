@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { UsuariosService } from '../../services/usuarios.service';
+import { TipoSesionComponent } from '../../components/tipo-sesion/tipo-sesion.component';
+import { StorageService } from '../../services/storage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,7 +21,9 @@ export class LoginPage implements OnInit{
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
-    private userSrv: UsuariosService
+    private userSrv: UsuariosService,
+    private modalCtrl: ModalController,
+    private storageSrv:StorageService
   ) { }
 
   ngOnInit() {
@@ -30,7 +34,14 @@ export class LoginPage implements OnInit{
 
     if (!this.showErros()) return
     const user= await this.userSrv.validarCuenta(this.usuario,this.password);
-    if (user) {
+    if (user?.length) {
+      const modal = await this.modalCtrl.create({
+        component: TipoSesionComponent,
+      });
+      await modal.present();
+      const {data}= await modal.onWillDismiss();
+      console.log(data.sesion);
+      this.storageSrv.guardarSesion(user,this.usuario,data.sesion)
       this.router.navigate(['tabs'])
     } else {
       const alert = await this.alertCtrl.create({

@@ -2,15 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
+import { TipoSesionComponent } from './tipo-sesion/tipo-sesion.component';
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    TipoSesionComponent
   ],
   exports:[
     HeaderComponent,
+    TipoSesionComponent
   ],
   imports: [
     CommonModule,
