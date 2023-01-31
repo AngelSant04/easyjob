@@ -15,3 +15,16 @@
     color: rgba(5, 22, 155, 0.817);
     font-size: 25px;
 }
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid #ddd;
+}
+
+.rectangle {
+    width: auto;
+    height: 100%;
+    margin: 0% 10%;
+}
+  
