@@ -12,7 +12,7 @@ export class TipoSesionPage implements OnInit {
 
   ngOnInit() {
   }
-  select(){
-    this.selected=false;
+  seleccionar(){
+    this.selected=!this.selected;
   }
 }
