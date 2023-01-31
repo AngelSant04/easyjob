@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-tarea.page';
+import { TareasService } from '../../services/tareas.service';
 
 @Component({
   selector: 'app-tab3',
@@ -9,7 +10,13 @@ import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-t
 })
 export class Tab3Page {
 
-  constructor(private modalCtrl: ModalController) {}
+  loading:any;
+
+  constructor(private modalCtrl: ModalController,
+              private tareasService: TareasService,
+              private loadingCtrl: LoadingController,
+              private alertCtrl: AlertController
+    ) {}
 
   async registrarTarea(){
     const modal = await this.modalCtrl.create({
@@ -18,12 +25,37 @@ export class Tab3Page {
     await modal.present();
 
     const { data } = await modal.onWillDismiss()
-    console.log(data);
+    
+    if (data) {
+
+      await this.presentLoading();
+      await this.tareasService.agregarTarea(data.tarea).then(resp => {
+        this.loading.dismiss();
+      }).catch(e => {
+        this.loading.dismiss();
+        throw e;
+      })
+      const alert = await this.alertCtrl.create({
+        header: 'Tarea Registrada',
+        message: 'Tarea registrada exitosamente',
+        buttons: ['OK'],
+      });
+      await alert.present();
+
+    }
     
   }
 
   listarTareas(){
     console.log("listar");
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingCtrl.create({
+      message: 'Procesando...',
+      duration: 20000
+    });
+    await this.loading.present();
   }
 
 }
