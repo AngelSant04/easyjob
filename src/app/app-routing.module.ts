@@ -13,11 +13,11 @@ const routes: Routes = [
   {
     path: 'registro-usuario',
     loadChildren: () => import('./pages/registro-usuario/registro-usuario.module').then( m => m.RegistroUsuarioPageModule)
+  },  {
+    path: 'tipo-sesion',
+    loadChildren: () => import('./pages/tipo-sesion/tipo-sesion.module').then( m => m.TipoSesionPageModule)
   },
-  {
-    path: 'tipo-usuario',
-    loadChildren: () => import('./pages/tipo-usuario/tipo-usuario.module').then( m => m.TipoUsuarioPageModule)
-  },
+
 ];
 @NgModule({
   imports: [

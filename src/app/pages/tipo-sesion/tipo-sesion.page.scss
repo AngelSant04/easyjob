@@ -1,0 +1,16 @@
+ion-img::part(image) {
+    border-radius: 50%;
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ion-card{
+    width: 60%;
+}
+.buttons{
+    display: flex !important;
+    align-items: center !important; 
+    justify-content: center !important;
+}
