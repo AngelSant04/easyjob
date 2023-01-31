@@ -51,9 +51,9 @@ export class UsuariosService {
       (user) =>user.usuario === usuario && user.clave === password
     );
     if(user){
-      return user.id;
+      return user;
     }else{
-      return ' ';
+      return null;
     }
 
   }

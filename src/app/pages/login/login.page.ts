@@ -34,14 +34,16 @@ export class LoginPage implements OnInit{
 
     if (!this.showErros()) return
     const user= await this.userSrv.validarCuenta(this.usuario,this.password);
-    if (user?.length) {
+    if (user) {
       const modal = await this.modalCtrl.create({
         component: TipoSesionComponent,
+        componentProps:{
+          usuario:user
+        }
       });
       await modal.present();
       const {data}= await modal.onWillDismiss();
-      console.log(data.sesion);
-      this.storageSrv.guardarSesion(user,this.usuario,data.sesion)
+      this.storageSrv.guardarSesion(user.usuario,this.usuario,data.sesion)
       this.router.navigate(['tabs'])
     } else {
       const alert = await this.alertCtrl.create({

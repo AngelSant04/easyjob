@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Usuario } from '../../interfaces/Usuario';
 
 @Component({
   selector: 'app-tipo-sesion',
@@ -7,8 +8,7 @@ import { ModalController, AlertController } from '@ionic/angular';
   styleUrls: ['./tipo-sesion.component.scss'],
 })
 export class TipoSesionComponent implements OnInit {
-  imgProfile: string =
-    'https://firebasestorage.googleapis.com/v0/b/storageeasyjob.appspot.com/o/images%2FPIERO%20SALAZAR%20PERFIL.jpg?alt=media&token=659d1532-860d-4624-a925-d961c4acc7da';
+  @Input() usuario!:Usuario;
   selectedEmpleado: boolean = false;
   selectedEmpleador: boolean = false;
   tipoSesion:string='';
