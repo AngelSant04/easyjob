@@ -8,5 +8,6 @@ export interface Tarea{
     fechaRealizar : string,
     nombre : string,
     pago : number,
+    estado: string,
 
 }

@@ -18,16 +18,15 @@ export class InfoRegistrarTareaPage implements OnInit {
     fechaCreacion : '',
     fechaRealizar : '',
     nombre : '',
-    pago : 0,
+    pago: 0,
+    estado: '',
   };
 
-  listaCategoria: Categoria[] = [];
-
-  categoria !: Categoria;
+  listaCategoria: Categoria[] = [];  
 
   mensajeNombre: string = '';
   mensajeDescripcion: string = '';
-  mensajeDirecció: string = '';
+  mensajeDireccion: string = '';
 
   constructor(private modalCtrl: ModalController,
       private categoriaService: CategoriaService
@@ -44,8 +43,11 @@ export class InfoRegistrarTareaPage implements OnInit {
   }
 
   confirm() {
+    let fecha = new Date();
+    this.tarea.fechaCreacion = fecha.toString();
+    this.tarea.estado = 'publicado';
     return this.modalCtrl.dismiss({
-      nombre: this.tarea
+      tarea: this.tarea,
     });
   }
 
