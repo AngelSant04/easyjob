@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-tarea.page';
 import { TareasService } from '../../services/tareas.service';
+import { ListadoTareasPage } from '../listado-tareas/listado-tareas.page';
 
 @Component({
   selector: 'app-tab3',
@@ -46,8 +47,12 @@ export class Tab3Page {
     
   }
 
-  listarTareas(){
-    console.log("listar");
+  async listarTareas(){
+    const modal = await this.modalCtrl.create({
+      component: ListadoTareasPage,
+    });
+    await modal.present();
+    
   }
 
   async presentLoading() {

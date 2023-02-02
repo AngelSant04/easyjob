@@ -17,7 +17,11 @@ const routes: Routes = [
   {
     path: 'info-registrar-tarea',
     loadChildren: () => import('./pages/info-registrar-tarea/info-registrar-tarea.module').then( m => m.InfoRegistrarTareaPageModule)
+  },  {
+    path: 'listado-tareas',
+    loadChildren: () => import('./pages/listado-tareas/listado-tareas.module').then( m => m.ListadoTareasPageModule)
   },
+
 
 ];
 @NgModule({

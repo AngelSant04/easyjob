@@ -9,11 +9,11 @@ import { TipoSesionComponent } from './tipo-sesion/tipo-sesion.component';
 @NgModule({
   declarations: [
     HeaderComponent,
-    TipoSesionComponent
+    TipoSesionComponent,
   ],
   exports:[
     HeaderComponent,
-    TipoSesionComponent
+    TipoSesionComponent,
   ],
   imports: [
     CommonModule,
