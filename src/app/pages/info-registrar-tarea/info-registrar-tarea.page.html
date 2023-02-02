@@ -66,8 +66,11 @@
         </ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button (click)="confirm()" expand="block">
+        <ion-button *ngIf="tipo === 'nuevo'" (click)="confirm()" expand="block">
           Registrar
+        </ion-button>
+        <ion-button *ngIf="tipo === 'modificar'" (click)="modificar()" expand="block">
+          Guardar
         </ion-button>
       </ion-col>
     </ion-row>

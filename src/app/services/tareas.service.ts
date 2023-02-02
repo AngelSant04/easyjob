@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Tarea } from '../interfaces/Tarea';
 import { Firestore, collectionData, docData } from '@angular/fire/firestore';
-import { collection, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, addDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -25,6 +25,18 @@ export class TareasService {
   async agregarTarea(tarea: Tarea) {
     const ref = collection(this.firestore, 'tarea');
     return addDoc(ref, tarea);
+  }
+
+  async modificarTarea(tarea: Tarea, id: any) {
+    const ref = doc(this.firestore, `tarea/${id}`);
+    return updateDoc(ref, {
+      nombre: tarea.nombre,
+      descripcion: tarea.descripcion,
+      idCategoria: tarea.idCategoria,
+      pago: tarea.pago,
+      fechaRealizar: tarea.fechaRealizar,
+      direccion: tarea.direccion
+    })
   }
 
   borrarTarea(id: any) {

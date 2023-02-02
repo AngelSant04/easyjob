@@ -9,5 +9,7 @@ export interface Tarea{
     nombre : string,
     pago : number,
     estado: string,
+    idUserEmpleado: string,
+    idUserEmpleador: string,
 
 }
