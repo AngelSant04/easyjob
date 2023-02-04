@@ -102,13 +102,18 @@
                   <ion-item>
                     <ion-label position="floating">DNI</ion-label>
                     <ion-input
-                      placeholder="Ingrese tu DNI" type="number"  [(ngModel)]="usuario.dni"
+                      placeholder="Ingrese tu DNI"
+                      type="text"
+                      maxlength="8"
+                      (keypress)="numberOnlyValidation($event)"
+                      [(ngModel)]="usuario.dni"
+                      (ngModelChange)="iconSearchValidation()"
                     ></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col class="ion-text-center" size="2">
-                  <ion-button size="small" (click)="prueba('72933275')">
-                    <ion-icon slot="icon-only"  name="search-outline"></ion-icon>
+                  <ion-button size="small" (click)="buscarDNI()" [disabled]="searchButton">
+                    <ion-icon slot="icon-only" name="search-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
                 <ion-col size="6">

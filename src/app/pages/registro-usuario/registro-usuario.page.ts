@@ -10,6 +10,7 @@ import { UsuariosService } from '../../services/usuarios.service';
   styleUrls: ['./registro-usuario.page.scss'],
 })
 export class RegistroUsuarioPage implements OnInit {
+  searchButton:boolean=true;
   mostrar: string = 'password';
   bandera!: boolean;
   usuario: Usuario = {
@@ -20,11 +21,11 @@ export class RegistroUsuarioPage implements OnInit {
     usuario: '',
     correo: '',
     clave: '',
-    dni:''
+    dni: '',
   };
   previewProfle: any;
-  imgFile:any;
-  loading:any;
+  imgFile: any;
+  loading: any;
   mensajeNombre: string = '';
   mensajeApellido: string = '';
   mensajeTelefono: string = '';
@@ -35,8 +36,8 @@ export class RegistroUsuarioPage implements OnInit {
     private userSrv: UsuariosService,
     private router: Router,
     private alertCtrl: AlertController,
-    private loadingcrtl:LoadingController
-  ) { }
+    private loadingcrtl: LoadingController
+  ) {}
 
   ngOnInit() {
     this.mostrar === 'password'
@@ -55,27 +56,30 @@ export class RegistroUsuarioPage implements OnInit {
   }
   async registrar() {
     if (!this.showErros()) return;
-    const validUser= this.userSrv.validarRegistro(this.usuario);
-    if(!validUser.length){
+    const validUser = this.userSrv.validarRegistro(this.usuario);
+    if (!validUser.length) {
       await this.presentLoading();
-      await this.userSrv.agregarUsuario(this.usuario,this.imgFile).then(resp=>{
-        this.loading.dismiss();
-      }).catch(err=>{
-        this.loading.dismiss();
-        throw err;
-      });
+      await this.userSrv
+        .agregarUsuario(this.usuario, this.imgFile)
+        .then((resp) => {
+          this.loading.dismiss();
+        })
+        .catch((err) => {
+          this.loading.dismiss();
+          throw err;
+        });
       const alert = await this.alertCtrl.create({
         header: 'Registro Exitoso',
-        message: `Vuelve a iniciar sesión` ,
+        message: `Vuelve a iniciar sesión`,
         buttons: ['Continuar'],
       });
       await alert.present();
       await alert.onDidDismiss();
-      this.router.navigate([''])
-    }else{
+      this.router.navigate(['']);
+    } else {
       const alert = await this.alertCtrl.create({
         header: 'Error',
-        message: `${validUser} ya existe. Pruebe con otro` ,
+        message: `${validUser} ya existe. Pruebe con otro`,
         buttons: ['OK'],
       });
       await alert.present();
@@ -121,7 +125,7 @@ export class RegistroUsuarioPage implements OnInit {
   cargarImagen(_event: any) {
     if (_event.target.files && _event.target.files[0]) {
       const file = _event.target.files[0];
-      this.imgFile=file;
+      this.imgFile = file;
       const reader = new FileReader();
       reader.onload = () => {
         this.previewProfle = reader.result;
@@ -132,17 +136,48 @@ export class RegistroUsuarioPage implements OnInit {
   async presentLoading() {
     this.loading = await this.loadingcrtl.create({
       message: 'Procesando...',
-      duration: 20000
+      duration: 20000,
     });
     await this.loading.present();
   }
-  prueba(dni:string){
-    this.userSrv.buscarDNI(dni).subscribe(rep=>{
-      if(rep.success){
-        this.usuario.dni=rep.data.numero;
-        this.usuario.nombres=rep.data.nombres;
-        this.usuario.apellidos=`${rep.data.apellido_paterno} ${rep.data.apellido_materno}`
+  async buscarDNI() {
+    await this.presentLoading()
+    this.userSrv.buscarDNI(this.usuario.dni).subscribe(async (rep) => {
+      if (rep.success) {
+        this.loading.dismiss();
+        this.usuario.nombres = rep.data.nombres;
+        this.usuario.apellidos = `${rep.data.apellido_paterno} ${rep.data.apellido_materno}`;
+      }else{
+        this.loading.dismiss();
+        const alert = await this.alertCtrl.create({
+          header: 'Error',
+          message: `DNI Incorrecto`,
+          buttons: ['OK'],
+        });
+        await alert.present();
       }
+    });
+  }
+  numberOnlyValidation(event: any) {
+    //pattern
+    const pattern = /[0-9]/;
+    const inputChar = event.key; // add
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+   
+  }
+  iconSearchValidation(){
+    const cadena = this.usuario.dni.length
+    if(cadena>0)this.searchButton=false;
+    else this.searchButton=true;
+  }
+  async crearAlerta(header:string,message:string,buttons:String[]){
+    return await this.alertCtrl.create({
+      header: 'Registro Exitoso',
+      message: `Vuelve a iniciar sesión`,
+      buttons: ['Continuar'],
     });
   }
 }
