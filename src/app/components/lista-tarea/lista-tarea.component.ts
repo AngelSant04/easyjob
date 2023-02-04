@@ -13,6 +13,7 @@ export class ListaTareaComponent implements OnInit {
 
   @Input() tareas: Tarea[] = [];
   loading:any;
+  @Input() tab: string = 'tab2';
 
   constructor(private tareasService: TareasService,
               private loadingCtrl: LoadingController,
@@ -21,7 +22,6 @@ export class ListaTareaComponent implements OnInit {
 
   ngOnInit() {
 
-
   }
 
   async postular(id: string){
@@ -29,14 +29,36 @@ export class ListaTareaComponent implements OnInit {
     await this.presentLoading()
     let storage = await Preferences.get({key: 'session'});
     let objetoStorage =  JSON.parse(storage.value!);
-    this.tareasService.agregarPostulante(id, objetoStorage.idUsuario);
-    this.loading.dismiss();
-    const alert = await this.alertCtrl.create({
-      header: 'Postulación Enviada',
-      message: 'Postulaste a la tarea correctamente',
-      buttons: ['OK'],
-    });
-    await alert.present();
+
+    let existePostulante = this.tareasService.verificarPostulante(id, objetoStorage.idUsuario)
+    
+    if (existePostulante) {
+      this.loading.dismiss();
+      const alert = await this.alertCtrl.create({
+        header: 'Usted ya esta postulando',
+        message: 'Usted se encuentra en la lista de postulantes a la tarea',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    } else {
+      this.tareasService.agregarPostulante(id, objetoStorage.idUsuario);
+      this.loading.dismiss();
+      const alert = await this.alertCtrl.create({
+        header: 'Postulación Enviada',
+        message: 'Postulaste a la tarea correctamente',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+
+    
+    
+    // const alert = await this.alertCtrl.create({
+    //   header: 'Postulación Enviada',
+    //   message: 'Postulaste a la tarea correctamente',
+    //   buttons: ['OK'],
+    // });
+    // await alert.present();
   }
 
   async presentLoading() {

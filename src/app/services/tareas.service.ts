@@ -10,9 +10,14 @@ import { DataSnapshot } from 'firebase/database';
 })
 export class TareasService {
 
+  private listaTareas!: Tarea[];
 
   constructor(private firestore: Firestore,
-    ) {}
+    ) {
+      this.getTareas().subscribe((resp) => {
+        this.listaTareas = resp;
+      });
+    }
 
   getTareas(): Observable<Tarea[]> {
     const ref = collection(this.firestore, 'tarea');
@@ -43,6 +48,21 @@ export class TareasService {
     })
   }
 
+  verificarPostulante(id: any, idUsuario:string){
+    
+    let tarea = this.listaTareas.find(tarea => tarea.id === id)
+
+    let postulante = tarea?.postulantes.find(postulante => postulante === idUsuario)
+
+    if (postulante) {
+      return true
+    } else {
+      return false
+    }
+    
+    
+  }
+
   agregarPostulante(id: any, idUsuario:string) {
 
     let data = this.getTarea(id);
@@ -50,7 +70,6 @@ export class TareasService {
     let postulantes:string[] = [];
 
     data.then(e=>{
-
       postulantes = e.postulantes;
       postulantes.push(idUsuario);
       const ref = doc(this.firestore, `tarea/${id}`);
