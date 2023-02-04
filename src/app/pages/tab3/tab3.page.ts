@@ -1,23 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-tarea.page';
 import { TareasService } from '../../services/tareas.service';
 import { ListadoTareasPage } from '../listado-tareas/listado-tareas.page';
+import { Preferences } from '@capacitor/preferences';
+import * as EventEmitter from 'events';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit{
 
   loading:any;
+  tipoSesion: string = '';
+  tipoSegment:string = 'postulaciones';
 
   constructor(private modalCtrl: ModalController,
               private tareasService: TareasService,
               private loadingCtrl: LoadingController,
               private alertCtrl: AlertController
     ) {}
+
+  async ngOnInit(){
+    let storage = await Preferences.get({key: 'session'});
+    let objetoStorage =  JSON.parse(storage.value!);
+    
+    this.tipoSesion = objetoStorage.tipoSesion;
+    
+  }
 
   async registrarTarea(){
     const modal = await this.modalCtrl.create({
@@ -61,6 +73,10 @@ export class Tab3Page {
       duration: 20000
     });
     await this.loading.present();
+  }
+
+  cambioSegment(e:any){
+    console.log(this.tipoSegment);
   }
 
 }

@@ -1,0 +1,59 @@
+<ion-grid class="ion-padding">
+
+  <ion-row class="ion-text-center"  *ngFor="let tarea of tareas">
+    <ion-col>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{tarea.nombre}}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                Fecha a Realizar
+              </ion-col>
+              <ion-col size="6">
+                {{tarea.fechaRealizar | date: 'mediumDate'}}
+              </ion-col>
+              <ion-col size="6">
+                Hora a Realizar
+              </ion-col>
+              <ion-col size="6">
+                {{tarea.fechaRealizar | date: 'shortTime'}}
+              </ion-col>
+              <ion-col size="6">
+                Dirección
+              </ion-col>
+              <ion-col size="6">
+                {{tarea.direccion}}
+              </ion-col>
+              <ion-col size="6">
+                Pago
+              </ion-col>
+              <ion-col size="6">
+                {{tarea.pago}}
+              </ion-col>
+              <ion-col size="6">
+                Estado
+              </ion-col>
+              <ion-col size="6">
+                {{tarea.estado}}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          
+        </ion-card-content>
+      
+        <ion-button fill="clear" (click)="postular(tarea.id ? tarea.id : '')">
+          <ion-icon style="font-size: 30px;" name="open-outline"></ion-icon>
+        </ion-button>
+        <!-- <ion-button fill="clear" (click)="eliminar(tarea.id ? tarea.id : '')">
+          <ion-icon style="font-size: 30px;" name="trash-outline"></ion-icon>
+        </ion-button> -->
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-grid>

@@ -22,7 +22,8 @@ export class InfoRegistrarTareaPage implements OnInit {
     pago: 0,
     estado: '',
     idUserEmpleado: '',
-    idUserEmpleador: ''
+    idUserEmpleador: '',
+    postulantes: [],
   };  
 
   listaCategoria: Categoria[] = [];
