@@ -13,6 +13,8 @@ export const environment = {
     authDomain: 'storageeasyjob.firebaseapp.com',
     messagingSenderId: '369119938369',
   },
+  apiKey:'?api_token=8530e6ef219a32b9dedb067db776ac3a64f5f8225c77b78fc81a30ffed78d1a7',
+  apiUrl:'https://apiperu.dev/api/dni/',
   production: false
 };
 

@@ -1,15 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Usuario } from '../interfaces/Usuario';
+import { Usuario, DNIResponse, DataDNI } from '../interfaces/Usuario';
 import { collectionData, docData, Firestore } from '@angular/fire/firestore';
-import {addDoc, collection,deleteDoc,doc,updateDoc,} from 'firebase/firestore';
-import { Observable } from 'rxjs';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
+import { map, Observable } from 'rxjs';
 import { ImagenesService } from './imagenes.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { REFUSED } from 'dns';
+const apiKey = environment.apiKey;
+const apiUrl = environment.apiUrl;
 @Injectable({
   providedIn: 'root',
 })
 export class UsuariosService {
   public listaUsuarios!: Usuario[];
-  constructor(private firestore: Firestore, private imgSrv: ImagenesService) {
+  public dniInfo:any;
+  constructor(
+    private firestore: Firestore,
+    private imgSrv: ImagenesService,
+    private http: HttpClient
+  ) {
     this.getUsuarios().subscribe((resp) => {
       this.listaUsuarios = resp;
     });
@@ -47,14 +63,16 @@ export class UsuariosService {
     return mensaje;
   }
   async validarCuenta(usuario: string, password: string) {
-    const user=this.listaUsuarios.find(
-      (user) =>user.usuario === usuario && user.clave === password
+    const user = this.listaUsuarios.find(
+      (user) => user.usuario === usuario && user.clave === password
     );
-    if(user){
+    if (user) {
       return user;
-    }else{
+    } else {
       return null;
     }
-
+  }
+  buscarDNI(dni: string){
+    return this.http.get<DNIResponse>(`${apiUrl}${dni}${apiKey}`)
   }
 }
