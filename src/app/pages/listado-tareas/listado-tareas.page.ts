@@ -27,7 +27,8 @@ export class ListadoTareasPage implements OnInit {
     pago: 0,
     estado: '',
     idUserEmpleado: '',
-    idUserEmpleador: ''
+    idUserEmpleador: '',
+    postulantes: [],
   };
 
   constructor(private modalCtrl: ModalController,

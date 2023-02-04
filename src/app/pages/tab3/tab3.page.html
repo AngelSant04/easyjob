@@ -4,9 +4,26 @@
       Mis Tareas
     </ion-title>
   </ion-toolbar>
-</ion-header> 
+</ion-header>
 
-<ion-content class="ion-text-center " [fullscreen]="true">
+<ion-content *ngIf="tipoSesion === 'empleado'" class="ion-text-center " [fullscreen]="true">
+
+  <ion-segment [(ngModel)]="tipoSegment" (ionChange)="cambioSegment($event)">
+    <ion-segment-button value="postulaciones">
+      <ion-label>Postulaciones</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="tareasAceptadas">
+      <ion-label>Aceptadas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="tareasFinalizadas">
+      <ion-label>Finalizadas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+</ion-content>
+
+<ion-content *ngIf="tipoSesion === 'empleador'" class="ion-text-center " [fullscreen]="true">
 
   <div (click)="registrarTarea()">
 

@@ -11,5 +11,6 @@ export interface Tarea{
     estado: string,
     idUserEmpleado: string,
     idUserEmpleador: string,
+    postulantes: string[],
 
 }

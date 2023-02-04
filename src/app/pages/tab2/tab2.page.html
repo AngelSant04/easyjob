@@ -1,16 +1,23 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border" mode="ios" translucent>
   <ion-toolbar>
-    <ion-title>
-      Tab 2
+    <ion-title class="ion-text-capitalize ion-text-center cabecera textoTitulo">
+      Busqueda de Tareas
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
   
+  <ion-item>
+
+    <ion-label>Categoria</ion-label>
+    <ion-select placeholder="Categoria" [(ngModel)]="idCategoria" (ionChange)="cambiarCategoria($event)">
+      <ion-select-option *ngFor="let item of listaCategoria" [value]="item.id">{{item.nombre}}</ion-select-option>
+    </ion-select>
+
+  </ion-item>
+
+  <app-lista-tarea [tareas]="listaTareas"></app-lista-tarea>
+
+
 </ion-content>
