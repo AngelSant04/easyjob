@@ -173,11 +173,4 @@ export class RegistroUsuarioPage implements OnInit {
     if(cadena>0)this.searchButton=false;
     else this.searchButton=true;
   }
-  async crearAlerta(header:string,message:string,buttons:String[]){
-    return await this.alertCtrl.create({
-      header: 'Registro Exitoso',
-      message: `Vuelve a iniciar sesión`,
-      buttons: ['Continuar'],
-    });
-  }
 }
