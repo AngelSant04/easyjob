@@ -4,7 +4,7 @@
   <ion-grid fixed class="ion-text-center">
     <ion-row>
       <ion-col style="padding: 25px 0px" size="12">
-        <ion-img src="/assets/LOGOS EN CONJUNTO.png"></ion-img>
+        <ion-img class="logo" src="/assets/LOGOS EN CONJUNTO.png"></ion-img>
       </ion-col>
       <ion-col size="12">
         <p style="size: 20px">Trabajo a tu medida. En la palma de tus manos.</p>
@@ -36,12 +36,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="12" class="avatar">
-        <ion-avatar style="margin: 0 auto" size="large">
-          <img
-            alt="Profile Image"
-            [src]="this.previewProfle || 'https://ionicframework.com/docs/img/demos/avatar.svg'"
-          />
-        </ion-avatar>
+        <ion-img  class="perfil" [src]="this.previewProfle || 'https://ionicframework.com/docs/img/demos/avatar.svg'"></ion-img>
       </ion-col>
 
       <ion-col size="6">
