@@ -5,6 +5,7 @@ import { TareasService } from '../../services/tareas.service';
 import { ListadoTareasPage } from '../listado-tareas/listado-tareas.page';
 import { Preferences } from '@capacitor/preferences';
 import * as EventEmitter from 'events';
+import { Tarea } from '../../interfaces/Tarea';
 
 @Component({
   selector: 'app-tab3',
@@ -16,6 +17,8 @@ export class Tab3Page implements OnInit{
   loading:any;
   tipoSesion: string = '';
   tipoSegment:string = 'postulaciones';
+  listaTareas: Tarea[] = [];
+  idUsuario:string = '';
 
   constructor(private modalCtrl: ModalController,
               private tareasService: TareasService,
@@ -28,6 +31,21 @@ export class Tab3Page implements OnInit{
     let objetoStorage =  JSON.parse(storage.value!);
     
     this.tipoSesion = objetoStorage.tipoSesion;
+
+    this.idUsuario = objetoStorage.idUsuario
+    
+    this.tareasService.getTareas().subscribe(resp => {
+      this.listaTareas = resp.filter(tarea =>{
+        let existePostulante = this.tareasService.verificarPostulante(tarea.id, this.idUsuario)
+        
+        if (existePostulante && tarea.estado === 'publicado') {
+          return tarea;
+        } else {
+          return null;
+        }
+        
+      })
+    })
     
   }
 
@@ -75,8 +93,38 @@ export class Tab3Page implements OnInit{
     await this.loading.present();
   }
 
-  cambioSegment(e:any){
-    console.log(this.tipoSegment);
+  async cambioSegment(e:any){
+
+    switch (this.tipoSegment) {
+      case 'postulaciones':
+        this.tareasService.getTareas().subscribe(resp => {
+          this.listaTareas = resp.filter(tarea =>{
+            let existePostulante = this.tareasService.verificarPostulante(tarea.id, this.idUsuario)
+            
+            if (existePostulante && tarea.estado === 'publicado') {
+              return tarea;
+            } else {
+              return null;
+            }
+            
+          })
+        })
+        break;
+
+      case 'tareasAceptadas':
+        this.tareasService.getTareas().subscribe(resp => {
+          this.listaTareas = resp.filter(tarea => tarea.idUserEmpleado === this.idUsuario && tarea.estado === 'en proceso')
+        })
+        break;
+      
+      case 'tareasFinalizadas':
+        this.tareasService.getTareas().subscribe(resp => {
+          this.listaTareas = resp.filter(tarea => tarea.idUserEmpleado === this.idUsuario && tarea.estado === 'finalizado')
+        })
+        break;
+    }
+
+
   }
 
 }
