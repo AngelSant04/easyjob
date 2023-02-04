@@ -20,6 +20,7 @@ export class RegistroUsuarioPage implements OnInit {
     usuario: '',
     correo: '',
     clave: '',
+    dni:''
   };
   previewProfle: any;
   imgFile:any;
@@ -134,5 +135,14 @@ export class RegistroUsuarioPage implements OnInit {
       duration: 20000
     });
     await this.loading.present();
+  }
+  prueba(dni:string){
+    this.userSrv.buscarDNI(dni).subscribe(rep=>{
+      if(rep.success){
+        this.usuario.dni=rep.data.numero;
+        this.usuario.nombres=rep.data.nombres;
+        this.usuario.apellidos=`${rep.data.apellido_paterno} ${rep.data.apellido_materno}`
+      }
+    });
   }
 }
