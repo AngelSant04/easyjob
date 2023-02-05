@@ -4,6 +4,8 @@ import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { TipoSesionComponent } from './tipo-sesion/tipo-sesion.component';
 import { ListaTareaComponent } from './lista-tarea/lista-tarea.component';
+import { AntecedenteComponent } from './antecedente/antecedente.component';
+import { SwiperModule } from 'swiper/angular';
 
 
 
@@ -11,7 +13,8 @@ import { ListaTareaComponent } from './lista-tarea/lista-tarea.component';
   declarations: [
     HeaderComponent,
     TipoSesionComponent,
-    ListaTareaComponent    
+    ListaTareaComponent ,
+    AntecedenteComponent  
   ],
   exports:[
     HeaderComponent,
@@ -20,7 +23,8 @@ import { ListaTareaComponent } from './lista-tarea/lista-tarea.component';
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    SwiperModule
   ]
 })
 export class ComponentsModule { }
