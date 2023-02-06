@@ -8,7 +8,57 @@
 
 <ion-content>
 
-<app-detalle-usuario [usuarios]="usuarios"></app-detalle-usuario>
+  <ion-grid class="ion-padding">
+
+    <ion-row style="padding-top: 15px;" class="ion-text-center"  *ngFor="let user of usuarios">
+  
+      <ion-col class="colImg" size="5">
+        <ion-avatar style="width: 100px; height: 100px;">
+          <ion-img [src]="user.imgUsuario"></ion-img>
+        </ion-avatar>
+      </ion-col>
+  
+      <ion-col size="7">
+        <ion-grid>
+          <ion-row style="font-size: 13px;">
+            <ion-col size="6">
+              Nombres
+            </ion-col>
+            <ion-col size="6">
+              {{user.nombres}}
+            </ion-col>
+            <ion-col size="6">
+              Apellidos
+            </ion-col>
+            <ion-col size="6">
+              {{user.apellidos}}
+            </ion-col>
+            <ion-col size="6">
+              Correo
+            </ion-col>
+            <ion-col size="6">
+              {{user.correo}}
+            </ion-col>
+            <ion-col size="6">
+              Telefono
+            </ion-col>
+            <ion-col size="6">
+              {{user.celular}}
+            </ion-col>
+            <ion-col size="12">
+              <ion-button (click)="verMas(user)" expand="block" fill="outline" size="small">
+                <ion-icon slot="start" name="ellipsis-horizontal-outline"></ion-icon>
+                Ver más
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+  
+  
+    </ion-row>
+  
+  </ion-grid>
 
 </ion-content>
 

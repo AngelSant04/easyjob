@@ -1,6 +1,65 @@
-<ion-grid class="ion-padding">
+<ion-header class="ion-no-border" mode="ios" translucent>
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">
+      {{usuario.nombres}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-row class="ion-text-center"  *ngFor="let user of usuarios">
-  </ion-row>
+<ion-content>
+  
+  <ion-grid fixed>
+    <ion-row class="ion-padding">
+      <ion-col size="12">
+        <ion-img [src]="usuario.imgUsuario"></ion-img>
+      </ion-col>
+      <ion-col size="6">
+        Nombres:
+      </ion-col>
+      <ion-col size="6">
+        {{usuario.nombres}}
+      </ion-col>
+      <ion-col size="6">
+        Apellidos:
+      </ion-col>
+      <ion-col size="6">
+        {{usuario.apellidos}}
+      </ion-col>
+      <ion-col size="6">
+        Fecha de Nacimiento:
+      </ion-col>
+      <ion-col size="6">
+        {{usuario.fechaNacimiento | date: 'mediumDate'}}
+      </ion-col>
+      <ion-col size="6">
+        Celular
+      </ion-col>
+      <ion-col size="6">
+        {{usuario.celular}}
+      </ion-col>
+      <ion-col size="6">
+        Correo
+      </ion-col>
+      <ion-col size="6">
+        {{usuario.correo}}
+      </ion-col>
+      <ion-col size="6">
+        Usuario
+      </ion-col>
+      <ion-col size="6">
+        {{usuario.usuario}}
+      </ion-col>
+      <ion-col size="6">
+        <ion-button fill="outline" (click)="cancel()" expand="block">
+          Volver
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="aceptarPostulante(usuario.usuario)" expand="block">
+          Aceptar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-</ion-grid>
+</ion-content>

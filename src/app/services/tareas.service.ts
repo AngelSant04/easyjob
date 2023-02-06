@@ -77,6 +77,20 @@ export class TareasService {
     
   }
 
+  devolverPostulantes(id: any){
+    
+    let tarea = this.listaTareas.find(tarea => tarea.id === id)
+    
+
+    if (tarea?.postulantes.length! > 0) {
+      return tarea?.postulantes;
+    } else {
+      return null
+    }
+    
+    
+  }
+
   agregarPostulante(id: any, idUsuario:string) {
 
     let data = this.getTarea(id);
@@ -97,6 +111,20 @@ export class TareasService {
   borrarTarea(id: any) {
     const ref = doc(this.firestore, `tarea/${id}`);
     return deleteDoc(ref);
+  }
+
+  agregarIdEmpleado(id: any, idUsuario:string) {
+
+    let data = this.getTarea(id);
+
+    data.then(e=>{
+      const ref = doc(this.firestore, `tarea/${id}`);
+      return updateDoc(ref, {
+        estado: 'en proceso',
+        idUserEmpleado: idUsuario
+      })
+    })
+
   }
 
 }

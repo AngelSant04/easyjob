@@ -75,4 +75,15 @@ export class UsuariosService {
   buscarDNI(dni: string){
     return this.http.get<DNIResponse>(`${apiUrl}${dni}${apiKey}`)
   }
+
+  buscarXUsuario(usuario: string) {
+    const user = this.listaUsuarios.find(
+      (user) => user.usuario === usuario
+    );
+    if (user) {
+      return user;
+    } else {
+      return null;
+    }
+  }
 }

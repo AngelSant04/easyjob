@@ -43,19 +43,17 @@ export class InfoRegistrarTareaPage implements OnInit {
 
     await this.presentLoading()
 
+    this.categoriaService.getCategorias().subscribe((resp) => {
+      this.listaCategoria = resp;
+    });
+
     if (this.tarea.id) {
       this.tipo = "modificar";
     } else {
       this.tipo = "nuevo";
     }
 
-    this.categoriaService.getCategorias().subscribe((resp) => {
-      this.listaCategoria = resp;
-      this.loading.dismiss();
-    });    
-
-    console.log(this.listaCategoria);
-    
+    this.loading.dismiss();
   }
 
   cancel() {

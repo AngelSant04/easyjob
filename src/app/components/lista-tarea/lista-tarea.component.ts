@@ -4,6 +4,8 @@ import { Tarea } from '../../interfaces/Tarea';
 import { Preferences } from '@capacitor/preferences';
 import { LoadingController, AlertController, ModalController } from '@ionic/angular';
 import { DetalleTareaComponent } from '../detalle-tarea/detalle-tarea.component';
+import { UsuariosService } from '../../services/usuarios.service';
+import { Usuario } from '../../interfaces/Usuario';
 
 @Component({
   selector: 'app-lista-tarea',
@@ -19,7 +21,8 @@ export class ListaTareaComponent implements OnInit {
   constructor(private tareasService: TareasService,
               private loadingCtrl: LoadingController,
               private alertCtrl: AlertController,
-              private modalCtrl: ModalController
+              private modalCtrl: ModalController,
+              private userService: UsuariosService
     ) { }
 
   ngOnInit() {
@@ -56,8 +59,26 @@ export class ListaTareaComponent implements OnInit {
 
   async verPostulantes(id: string){
 
+    let usuarios:Usuario[]=[];
+
+    const postulantes = this.tareasService.devolverPostulantes(id);
+
+    postulantes?.forEach(postulante => {
+
+      const user = this.userService.buscarXUsuario(postulante);
+      
+      if (user) {
+        usuarios.push(user)
+      }
+
+    })
+
     const modal = await this.modalCtrl.create({
       component: DetalleTareaComponent,
+      componentProps: {
+        usuarios: usuarios,
+        idTarea: id
+      }
     });
     await modal.present();
   }
