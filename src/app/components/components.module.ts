@@ -7,6 +7,8 @@ import { ListaTareaComponent } from './lista-tarea/lista-tarea.component';
 import { RevisarPostulantesComponent } from './revisar-postulantes/revisar-postulantes.component';
 import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
 import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
+import { AntecedenteComponent } from './antecedente/antecedente.component';
+import { SwiperModule } from 'swiper/angular';
 
 
 
@@ -17,7 +19,9 @@ import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.compo
     ListaTareaComponent,
     RevisarPostulantesComponent,
     DetalleTareaComponent,
-    DetalleUsuarioComponent
+    DetalleUsuarioComponent,
+    ListaTareaComponent,
+    AntecedenteComponent  
   ],
   exports:[
     HeaderComponent,
@@ -27,7 +31,8 @@ import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.compo
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    SwiperModule
   ]
 })
 export class ComponentsModule { }

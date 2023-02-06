@@ -53,6 +53,9 @@ export class InfoRegistrarTareaPage implements OnInit {
       this.listaCategoria = resp;
       this.loading.dismiss();
     });    
+
+    console.log(this.listaCategoria);
+    
   }
 
   cancel() {

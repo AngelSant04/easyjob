@@ -10,9 +10,6 @@ import { environment } from '../environments/environment';
 import { provideStorage, getStorage ,} from '@angular/fire/storage';
 import { provideFirestore, getFirestore ,} from '@angular/fire/firestore';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { ComponentsModule } from './components/components.module';
-
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

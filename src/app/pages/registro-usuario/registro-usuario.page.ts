@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController ,ModalController} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Usuario } from '../../interfaces/Usuario';
 import { UsuariosService } from '../../services/usuarios.service';
+import { AntecedenteComponent } from 'src/app/components/antecedente/antecedente.component';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -36,7 +37,8 @@ export class RegistroUsuarioPage implements OnInit {
     private userSrv: UsuariosService,
     private router: Router,
     private alertCtrl: AlertController,
-    private loadingcrtl: LoadingController
+    private loadingcrtl: LoadingController,
+    private modalCtrl: ModalController,
   ) {}
 
   ngOnInit() {
@@ -55,35 +57,40 @@ export class RegistroUsuarioPage implements OnInit {
     }
   }
   async registrar() {
-    if (!this.showErros()) return;
-    const validUser = this.userSrv.validarRegistro(this.usuario);
-    if (!validUser.length) {
-      await this.presentLoading();
-      await this.userSrv
-        .agregarUsuario(this.usuario, this.imgFile)
-        .then((resp) => {
-          this.loading.dismiss();
-        })
-        .catch((err) => {
-          this.loading.dismiss();
-          throw err;
-        });
-      const alert = await this.alertCtrl.create({
-        header: 'Registro Exitoso',
-        message: `Vuelve a iniciar sesión`,
-        buttons: ['Continuar'],
-      });
-      await alert.present();
-      await alert.onDidDismiss();
-      this.router.navigate(['']);
-    } else {
-      const alert = await this.alertCtrl.create({
-        header: 'Error',
-        message: `${validUser} ya existe. Pruebe con otro`,
-        buttons: ['OK'],
-      });
-      await alert.present();
-    }
+    // if (!this.showErros()) return;
+    // const validUser = this.userSrv.validarRegistro(this.usuario);
+    // if (!validUser.length) {
+      const modal = await this.modalCtrl.create({
+        component: AntecedenteComponent,
+      })
+      await modal.present();
+      await modal.onWillDismiss();
+      // await this.presentLoading();
+      // await this.userSrv
+      //   .agregarUsuario(this.usuario, this.imgFile)
+      //   .then(() => {
+      //     this.loading.dismiss();
+      //   })
+      //   .catch((err) => {
+      //     this.loading.dismiss();
+      //     throw err;
+      //   });
+      // const alert = await this.alertCtrl.create({
+      //   header: 'Registro Exitoso',
+      //   message: `Vuelve a iniciar sesión`,
+      //   buttons: ['Continuar'],
+      // });
+      // await alert.present();
+      // await alert.onDidDismiss();
+      // this.router.navigate(['']);
+    // } else {
+    //   const alert = await this.alertCtrl.create({
+    //     header: 'Error',
+    //     message: `${validUser} ya existe. Pruebe con otro`,
+    //     buttons: ['OK'],
+    //   });
+    //   await alert.present();
+    // }
   }
 
   showErros() {
