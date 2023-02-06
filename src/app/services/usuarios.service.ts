@@ -39,8 +39,15 @@ export class UsuariosService {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return docData(ref, { idField: 'id' }) as Observable<Usuario>;
   }
-  async agregarUsuario(usuario: Usuario, imgFile: any) {
+  async agregarUsuario(usuario: Usuario, imgFile: any,pdfFile:any) {
     const ref = collection(this.firestore, 'usuarios');
+    if(pdfFile){
+      usuario.cuentaValidada=true;
+      usuario.pdfCuenta=await this.imgSrv.guardarImagen(pdfFile);
+    }else{
+      usuario.cuentaValidada=false;
+      usuario.pdfCuenta='';
+    }
     usuario.imgUsuario = await this.imgSrv.guardarImagen(imgFile);
     return addDoc(ref, usuario);
   }

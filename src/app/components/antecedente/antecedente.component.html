@@ -12,32 +12,48 @@
       <img src="/assets/slideimg3.png" alt="" />
       <h2>Queremos proteger tu integridad</h2>
       <p>
-        Buscamos que nuestros usuarios gozen de una experiencia de trabajo segura. 
-        Para esto solicitamos que puedas compartir tu <b>cetificado único laboral</b> dentro de tu perfil.
+        Buscamos que nuestros usuarios gozen de una experiencia de trabajo
+        segura. Para esto solicitamos que puedas compartir tu
+        <b>cetificado único laboral</b> dentro de tu perfil.
       </p>
     </ng-template>
     <ng-template swiperSlide>
       <img src="/assets/slideimg6.png" alt="" />
       <h2>¿Que es un certificado único laboral?</h2>
       <p>
-        Es el documento que necesitas para postular a un empleo.
-        Reúne tu información personal, antecedentes policiales, penales y judiciales, educación y experiencia laboral formal. Lo puedes obtener en línea, rápido y gratis.
-        Si no sabes como obtenerlo haz click aquí.
+        Es el documento que necesitas para postular a un empleo. Reúne tu
+        información personal, antecedentes policiales, penales y judiciales,
+        educación y experiencia laboral formal. Lo puedes obtener en línea,
+        rápido y gratis. Si no sabes como obtenerlo haz click aquí.
       </p>
     </ng-template>
     <ng-template swiperSlide>
       <img src="/assets/slideimg5.png" alt="" />
       <h2>¿De que me servirá esto?</h2>
       <p>
-        Al compartir esta información (que estará disponible en tu perfil) podremos marcar tu cuenta como <b>"Verificada"</b>
-        y eso hará que muchos usuarios se sientan seguros al trabajar contigo. 
+        Al compartir esta información (que estará disponible en tu perfil)
+        podremos marcar tu cuenta como <b>"Verificada"</b>
+        y eso hará que muchos usuarios se sientan seguros al trabajar contigo.
       </p>
     </ng-template>
     <ng-template swiperSlide>
-      <img src="/assets/slideimg7.png" alt="" />
-      <h2>¿Listo para subir tu certificado?</h2>
-      <ion-button fill="clear">Cargar Archivo<ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
-      <ion-button fill="clear">Tal vez más tarde<ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+      <img src="/assets/slideimg7.png " alt=""  *ngIf="groupButtons1"/>
+      <img src="/assets/slideimg8.png " alt=""  *ngIf="!groupButtons1"/>
+      <h2>{{groupButtons1?"¿Listo para subir tu certificado?":"¡Archivo cargado correctamente!"}}</h2>
+      <input
+        type="text"
+        type="file"
+        id="subida-archivo"
+        style="display: none"
+        accept="application/pdf"
+        (change)="cargarPdf($event)"
+      />
+      <ion-button fill="clear" (click)="openFileDialog()"
+        >{{groupButtons1?"Cargar Archivos":"Cambiar Archivo"}}<ion-icon slot="end" name="arrow-forward"></ion-icon
+      ></ion-button>
+      <ion-button fill="clear" (click)="finalizar()"
+        >{{groupButtons1?"Tal vez más tarde":"Finalizar"}}<ion-icon slot="end" name="arrow-forward"></ion-icon
+      ></ion-button>
     </ng-template>
   </swiper>
 </ion-content>

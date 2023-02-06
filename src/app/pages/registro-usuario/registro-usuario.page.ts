@@ -57,40 +57,40 @@ export class RegistroUsuarioPage implements OnInit {
     }
   }
   async registrar() {
-    // if (!this.showErros()) return;
-    // const validUser = this.userSrv.validarRegistro(this.usuario);
-    // if (!validUser.length) {
+    if (!this.showErros()) return;
+    const validUser = this.userSrv.validarRegistro(this.usuario);
+    if (!validUser.length) {
       const modal = await this.modalCtrl.create({
         component: AntecedenteComponent,
       })
       await modal.present();
-      await modal.onWillDismiss();
-      // await this.presentLoading();
-      // await this.userSrv
-      //   .agregarUsuario(this.usuario, this.imgFile)
-      //   .then(() => {
-      //     this.loading.dismiss();
-      //   })
-      //   .catch((err) => {
-      //     this.loading.dismiss();
-      //     throw err;
-      //   });
-      // const alert = await this.alertCtrl.create({
-      //   header: 'Registro Exitoso',
-      //   message: `Vuelve a iniciar sesión`,
-      //   buttons: ['Continuar'],
-      // });
-      // await alert.present();
-      // await alert.onDidDismiss();
-      // this.router.navigate(['']);
-    // } else {
-    //   const alert = await this.alertCtrl.create({
-    //     header: 'Error',
-    //     message: `${validUser} ya existe. Pruebe con otro`,
-    //     buttons: ['OK'],
-    //   });
-    //   await alert.present();
-    // }
+      const {data}= await modal.onWillDismiss();
+      await this.presentLoading();
+      await this.userSrv
+        .agregarUsuario(this.usuario, this.imgFile,data.pdfFile)
+        .then(() => {
+          this.loading.dismiss();
+        })
+        .catch((err) => {
+          this.loading.dismiss();
+          throw err;
+        });
+      const alert = await this.alertCtrl.create({
+        header: 'Registro Exitoso',
+        message: `Vuelve a iniciar sesión`,
+        buttons: ['Continuar'],
+      });
+      await alert.present();
+      await alert.onDidDismiss();
+      this.router.navigate(['']);
+    } else {
+      const alert = await this.alertCtrl.create({
+        header: 'Error',
+        message: `${validUser} ya existe. Pruebe con otro`,
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
   }
 
   showErros() {
