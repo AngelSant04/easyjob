@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border" mode="ios" translucent>
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">
+      Postulantes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<app-detalle-usuario [usuarios]="usuarios"></app-detalle-usuario>
+
+</ion-content>
+
+<ion-footer class="ion-no-border" mode="ios" translucent (click)="cancel()">
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">Volver</ion-title>
+  </ion-toolbar>
+</ion-footer>
+

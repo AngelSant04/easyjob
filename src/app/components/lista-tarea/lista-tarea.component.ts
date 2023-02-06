@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TareasService } from 'src/app/services/tareas.service';
 import { Tarea } from '../../interfaces/Tarea';
 import { Preferences } from '@capacitor/preferences';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, ModalController } from '@ionic/angular';
+import { DetalleTareaComponent } from '../detalle-tarea/detalle-tarea.component';
 
 @Component({
   selector: 'app-lista-tarea',
@@ -13,11 +14,12 @@ export class ListaTareaComponent implements OnInit {
 
   @Input() tareas: Tarea[] = [];
   loading:any;
-  @Input() tab: string = 'tab2';
+  @Input() tipo: string = 'tab2';
 
   constructor(private tareasService: TareasService,
               private loadingCtrl: LoadingController,
-              private alertCtrl: AlertController
+              private alertCtrl: AlertController,
+              private modalCtrl: ModalController
     ) { }
 
   ngOnInit() {
@@ -50,15 +52,14 @@ export class ListaTareaComponent implements OnInit {
       });
       await alert.present();
     }
+  }
 
-    
-    
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Postulación Enviada',
-    //   message: 'Postulaste a la tarea correctamente',
-    //   buttons: ['OK'],
-    // });
-    // await alert.present();
+  async verPostulantes(id: string){
+
+    const modal = await this.modalCtrl.create({
+      component: DetalleTareaComponent,
+    });
+    await modal.present();
   }
 
   async presentLoading() {

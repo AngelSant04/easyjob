@@ -4,6 +4,9 @@ import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { TipoSesionComponent } from './tipo-sesion/tipo-sesion.component';
 import { ListaTareaComponent } from './lista-tarea/lista-tarea.component';
+import { RevisarPostulantesComponent } from './revisar-postulantes/revisar-postulantes.component';
+import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
+import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
 
 
 
@@ -11,12 +14,16 @@ import { ListaTareaComponent } from './lista-tarea/lista-tarea.component';
   declarations: [
     HeaderComponent,
     TipoSesionComponent,
-    ListaTareaComponent    
+    ListaTareaComponent,
+    RevisarPostulantesComponent,
+    DetalleTareaComponent,
+    DetalleUsuarioComponent
   ],
   exports:[
     HeaderComponent,
     TipoSesionComponent,
-    ListaTareaComponent
+    ListaTareaComponent,
+    RevisarPostulantesComponent
   ],
   imports: [
     CommonModule,

@@ -63,6 +63,20 @@ export class TareasService {
     
   }
 
+  existePostulantes(id: any){
+    
+    let tarea = this.listaTareas.find(tarea => tarea.id === id)
+    
+
+    if (tarea?.postulantes.length! > 0) {
+      return true
+    } else {
+      return false
+    }
+    
+    
+  }
+
   agregarPostulante(id: any, idUsuario:string) {
 
     let data = this.getTarea(id);
