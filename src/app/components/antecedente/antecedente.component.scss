@@ -1,5 +1,8 @@
+.background{
+    --background: #B1E2DB;
+}
 .swiper-container{
-    width: 100% !important;
+
     height: 100% !important;
 }
 
@@ -8,4 +11,21 @@
     flex-direction: column !important ;
     align-items: center !important; 
     justify-content: center !important;
+}
+img{
+    max-height: 50%;
+    max-width: 60%;
+    margin: 60px 0 40px;
+    pointer-events: none;
+}
+h2{
+    padding: 0% 10% ;
+    text-align: center;
+    
+}
+p{
+    text-align: center;
+    padding: 0% 10% ;
+    font-size: 15px;
+    line-height: 1.5;
 }

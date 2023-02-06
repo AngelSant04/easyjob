@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController,LoadingController } from '@ionic/angular';
 import { UsuariosService } from '../../services/usuarios.service';
 import { TipoSesionComponent } from '../../components/tipo-sesion/tipo-sesion.component';
 import { StorageService } from '../../services/storage.service';
@@ -17,13 +17,14 @@ export class LoginPage implements OnInit{
   bandera !: boolean ;
   mensajeUsuario: string = '';
   mensajeClave: string = '';
-
+  loading: any;
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
     private userSrv: UsuariosService,
     private modalCtrl: ModalController,
-    private storageSrv:StorageService
+    private storageSrv:StorageService,
+    private loadingcrtl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -31,16 +32,26 @@ export class LoginPage implements OnInit{
   }
 
   async ingresar(){
-
     if (!this.showErros()) return
-    const user= await this.userSrv.validarCuenta(this.usuario,this.password);
+    await this.presentLoading();
+    const user= await this.userSrv.validarCuenta(this.usuario,this.password).then(rep=>{
+      this.loading.dismiss();
+      if(rep){
+        return rep
+      }else{
+        return null
+      }
+    }).catch((err) => {
+      this.loading.dismiss();
+      throw err;
+    });
     if (user) {
       const modal = await this.modalCtrl.create({
         component: TipoSesionComponent,
         componentProps:{
           usuario:user
         }
-      });
+      })
       await modal.present();
       const {data}= await modal.onWillDismiss();
       this.storageSrv.guardarSesion(user.usuario,this.usuario,data.sesion)
@@ -68,7 +79,6 @@ export class LoginPage implements OnInit{
   }
 
   showErros(){
-
     this.usuario ? this.mensajeUsuario = '' : this.mensajeUsuario = 'Usuario es Requerido'
     this.password ? this.mensajeClave = '' : this.mensajeClave = 'Clave es Requerido'
 
@@ -77,7 +87,13 @@ export class LoginPage implements OnInit{
     } else {
       return false
     }
-
+  }
+  async presentLoading() {
+    this.loading = await this.loadingcrtl.create({
+      message: 'Procesando...',
+      duration: 20000,
+    });
+    await this.loading.present();
   }
 
 }
