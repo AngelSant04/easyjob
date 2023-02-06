@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { CategoriaService } from 'src/app/services/categoria.service';
 import { Tarea } from '../../interfaces/Tarea';
 import { Categoria } from '../../interfaces/Categoria';
@@ -24,7 +24,8 @@ export class InfoRegistrarTareaPage implements OnInit {
     idUserEmpleado: '',
     idUserEmpleador: '',
     postulantes: [],
-  };  
+  };
+  loading:any;
 
   listaCategoria: Categoria[] = [];
   tipo:string = '';
@@ -35,17 +36,24 @@ export class InfoRegistrarTareaPage implements OnInit {
 
   constructor(private modalCtrl: ModalController,
       private categoriaService: CategoriaService,
+      private loadingCtrl: LoadingController,
     ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    await this.presentLoading()
+
     this.categoriaService.getCategorias().subscribe((resp) => {
       this.listaCategoria = resp;
-    });    
+    });
+
     if (this.tarea.id) {
       this.tipo = "modificar";
     } else {
       this.tipo = "nuevo";
     }
+
+    this.loading.dismiss();
   }
 
   cancel() {
@@ -71,6 +79,14 @@ export class InfoRegistrarTareaPage implements OnInit {
     return this.modalCtrl.dismiss({
       tarea: this.tarea,
     });
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingCtrl.create({
+      message: 'Espere...',
+      duration: 20000
+    });
+    await this.loading.present();
   }
 
 }

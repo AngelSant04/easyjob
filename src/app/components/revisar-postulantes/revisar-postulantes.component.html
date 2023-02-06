@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border" mode="ios" translucent>
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">
+      Revisar Postulantes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <app-lista-tarea tipo="tab4" [tareas]="tareas"></app-lista-tarea>
+
+</ion-content>
+
+<ion-footer class="ion-no-border" mode="ios" translucent (click)="cancel()">
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">Volver</ion-title>
+  </ion-toolbar>
+</ion-footer>
+
