@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { Usuario } from '../../interfaces/Usuario';
 
@@ -7,14 +7,12 @@ import { Usuario } from '../../interfaces/Usuario';
   templateUrl: './tipo-sesion.component.html',
   styleUrls: ['./tipo-sesion.component.scss'],
 })
-export class TipoSesionComponent implements OnInit {
+export class TipoSesionComponent {
   @Input() usuario!:Usuario;
   selectedEmpleado: boolean = false;
   selectedEmpleador: boolean = false;
   tipoSesion:string='';
   constructor(private modalCtrl:ModalController,private alertCtrl: AlertController) {}
-
-  ngOnInit() {}
 
   seleccionarEmpleado(tipo:string) {
     this.tipoSesion=tipo;

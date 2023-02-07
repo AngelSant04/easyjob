@@ -1,45 +1,48 @@
 <ion-content class="background">
   <swiper #swiper [config]="configSwipe" class="swiper-container">
     <ng-template swiperSlide>
-      <img src="/assets/slideimg4.png" alt="" />
-      <h2>Estas a un paso de finalizar tu registro</h2>
-      <p>
+      <img src="/assets/slideimg4.png"  class="imagenes" alt="" />
+      <h2 class="titleH2">Estas a un paso de finalizar tu registro</h2>
+      <p class="parrafo">
         Continua deslizando para conocer algunas recomendaciones que tenemos
         para ti dentro de la app.
       </p>
     </ng-template>
     <ng-template swiperSlide>
-      <img src="/assets/slideimg3.png" alt="" />
-      <h2>Queremos proteger tu integridad</h2>
-      <p>
+      <img src="/assets/slideimg3.png" class="imagenes" alt="" />
+      <h2 class="titleH2">Queremos proteger tu integridad</h2>
+      <p class="parrafo">
         Buscamos que nuestros usuarios gozen de una experiencia de trabajo
         segura. Para esto solicitamos que puedas compartir tu
         <b>cetificado único laboral</b> dentro de tu perfil.
       </p>
     </ng-template>
     <ng-template swiperSlide>
-      <img src="/assets/slideimg6.png" alt="" />
-      <h2>¿Que es un certificado único laboral?</h2>
-      <p>
+      <img src="/assets/slideimg6.png" class="imagenes" alt="" />
+      <h2 class="titleH2">¿Que es un certificado único laboral?</h2>
+      <p class="parrafo">
         Es el documento que necesitas para postular a un empleo. Reúne tu
         información personal, antecedentes policiales, penales y judiciales,
         educación y experiencia laboral formal. Lo puedes obtener en línea,
-        rápido y gratis. Si no sabes como obtenerlo haz click aquí.
+        rápido y gratis.
       </p>
+      <ion-button fill="clear" (click)="openBrowser()"
+        >¿Donde Conseguirlo?<ion-icon slot="end" name="arrow-forward"></ion-icon
+      ></ion-button>
     </ng-template>
     <ng-template swiperSlide>
-      <img src="/assets/slideimg5.png" alt="" />
-      <h2>¿De que me servirá esto?</h2>
-      <p>
+      <img src="/assets/slideimg5.png"  class="imagenes"alt="" />
+      <h2 class="titleH2">¿De que me servirá esto?</h2>
+      <p class="parrafo">
         Al compartir esta información (que estará disponible en tu perfil)
         podremos marcar tu cuenta como <b>"Verificada"</b>
         y eso hará que muchos usuarios se sientan seguros al trabajar contigo.
       </p>
     </ng-template>
     <ng-template swiperSlide>
-      <img src="/assets/slideimg7.png " alt=""  *ngIf="groupButtons1"/>
-      <img src="/assets/slideimg8.png " alt=""  *ngIf="!groupButtons1"/>
-      <h2>{{groupButtons1?"¿Listo para subir tu certificado?":"¡Archivo cargado correctamente!"}}</h2>
+      <img src="/assets/slideimg7.png " class="imagenes" alt=""  *ngIf="groupButtons1"/>
+      <img src="/assets/slideimg8.png " class="imagenes" alt=""  *ngIf="!groupButtons1"/>
+      <h2 class="titleH2">{{groupButtons1?"¿Listo para subir tu certificado?":"¡Archivo cargado correctamente!"}}</h2>
       <input
         type="text"
         type="file"

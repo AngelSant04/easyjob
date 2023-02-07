@@ -1,17 +1,43 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component} from '@angular/core';
+import {
+  ModalController,
+  NavController,
+  AlertController,
+} from '@ionic/angular';
 import { RevisarPostulantesComponent } from '../../components/revisar-postulantes/revisar-postulantes.component';
-
+import { StorageService } from '../../services/storage.service';
+import { PerfilComponent } from '../../components/perfil/perfil.component';
+import { Session } from '../../interfaces/Session';
+import { UsuariosService } from '../../services/usuarios.service';
+import { Usuario } from '../../interfaces/Usuario';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
-export class Tab4Page implements OnInit {
+export class Tab4Page {
+  constructor(
+    private modalCtrl: ModalController,
+    private nav: NavController,
+    private storageSrv: StorageService,
+    private alertCtrl: AlertController,
+    private usuarioServ:UsuariosService
+  ) {}
 
-  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {
+  async verPerfil() {
+    let sesion:any;
+    await this.storageSrv.getSesion().then(rep=>{
+      sesion=rep;
+    });
+    const user= this.usuarioServ.buscarXUsuario(sesion.userName);
+    const modal = await this.modalCtrl.create({
+      component: PerfilComponent,
+      componentProps:{
+        usuario:user
+      }
+    });
+    await modal.present();
   }
 
   async revisarPostulantes() {
@@ -19,7 +45,27 @@ export class Tab4Page implements OnInit {
       component: RevisarPostulantesComponent,
     });
     await modal.present();
-    
   }
-
+  async cerrarSesion() {
+    const alert = await this.alertCtrl.create({
+      header: '¿Quieres cerrar la sesión?',
+      message:
+        'Tendrás que verificar tu identidad la próxima vez que inicies sesión',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Continuar',
+          role: 'confirm',
+          handler: () => {
+            this.storageSrv.limpiarSesion();
+            this.nav.navigateRoot('');
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
 }

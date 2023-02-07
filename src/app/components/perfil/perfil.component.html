@@ -1,0 +1,12 @@
+<ion-content>
+  <div class="header">
+    <ion-img [src]="usuario.imgUsuario"></ion-img>
+    <h1>{{usuario.nombres}}</h1>
+    <h2>{{usuario.apellidos}}</h2>
+  </div>
+</ion-content>
+<ion-footer class="ion-no-border" mode="ios" translucent (click)="volver()">
+  <ion-toolbar>
+    <ion-title class="ion-text-capitalize ion-text-center">Volver</ion-title>
+  </ion-toolbar>
+</ion-footer>

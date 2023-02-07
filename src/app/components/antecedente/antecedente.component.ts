@@ -1,6 +1,7 @@
 import { Component,ViewEncapsulation,OnInit } from '@angular/core';
 import SwiperCore,{ Pagination, SwiperOptions} from 'swiper';
 import { ModalController} from '@ionic/angular';
+import { Browser } from '@capacitor/browser';
 SwiperCore.use([Pagination])
 @Component({
   selector: 'app-antecedente',
@@ -33,4 +34,7 @@ export class AntecedenteComponent {
         pdfFile:this.pdfFile
     });
   }
+  async openBrowser(){
+    await Browser.open({ url: 'https://www.empleosperu.gob.pe/CertificadoUnicoLaboral/' });
+  };
 }

@@ -45,7 +45,12 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-button class="ion-padding" expand="block" (click)="finalizar()">
-    Continuar
-  </ion-button>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="full" fill="clear" (click)="finalizar()">
+      Continuar
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

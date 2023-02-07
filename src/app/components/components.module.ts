@@ -9,6 +9,7 @@ import { DetalleTareaComponent } from './detalle-tarea/detalle-tarea.component';
 import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.component';
 import { AntecedenteComponent } from './antecedente/antecedente.component';
 import { SwiperModule } from 'swiper/angular';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 
@@ -21,7 +22,8 @@ import { SwiperModule } from 'swiper/angular';
     DetalleTareaComponent,
     DetalleUsuarioComponent,
     ListaTareaComponent,
-    AntecedenteComponent  
+    AntecedenteComponent,
+    PerfilComponent
   ],
   exports:[
     HeaderComponent,
