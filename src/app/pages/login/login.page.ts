@@ -54,7 +54,7 @@ export class LoginPage implements OnInit{
       })
       await modal.present();
       const {data}= await modal.onWillDismiss();
-      this.storageSrv.guardarSesion(user.id!,this.usuario,data.sesion)
+      this.storageSrv.guardarSesion(user.usuario,this.usuario,data.sesion)
       this.router.navigate(['tabs'])
     } else {
       const alert = await this.alertCtrl.create({
