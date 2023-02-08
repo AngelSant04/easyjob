@@ -10,9 +10,7 @@ import { DetalleUsuarioComponent } from './detalle-usuario/detalle-usuario.compo
 import { AntecedenteComponent } from './antecedente/antecedente.component';
 import { SwiperModule } from 'swiper/angular';
 import { PerfilComponent } from './perfil/perfil.component';
-
-
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -29,12 +27,13 @@ import { PerfilComponent } from './perfil/perfil.component';
     HeaderComponent,
     TipoSesionComponent,
     ListaTareaComponent,
-    RevisarPostulantesComponent
+    RevisarPostulantesComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
-    SwiperModule
+    SwiperModule,
+    FormsModule
   ]
 })
 export class ComponentsModule { }

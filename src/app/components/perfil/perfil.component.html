@@ -1,9 +1,155 @@
 <ion-content>
   <div class="header">
-    <ion-img [src]="usuario.imgUsuario"></ion-img>
-    <h1>{{usuario.nombres}}</h1>
-    <h2>{{usuario.apellidos}}</h2>
+    <div class="container-perfil">
+      <div class="outer">
+        <ion-img [src]="usuario.imgUsuario"></ion-img>
+        <div class="inner" (click)="diClick()">
+          <ion-icon name="camera" class="camera-icon"></ion-icon>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="container-nombre">
+      <ion-row>
+        <ion-col size="10">
+          <p>
+            {{ usuario.nombres }} <br />
+            {{ usuario.apellidos }}
+          </p>
+        </ion-col>
+        <ion-col align="right" size="2">
+          <ion-button fill="clear">
+            <ion-icon
+              slot="icon-only"
+              name="pencil-outline"
+              style="font-size: 20px; color: #2d3e50"
+            ></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </div> -->
   </div>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Datos de la Cuenta</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Usuario</ion-label>
+                    <ion-input
+                      [(ngModel)]="usuario.usuario"
+                      placeholder="Nombre de Usuario"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="11">
+                  <ion-item>
+                    <ion-label position="floating">Contraseña</ion-label>
+                    <ion-input
+                      [(ngModel)]="usuario.clave"
+                      placeholder="Contraseña"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Datos Personales</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="10">
+                  <ion-item>
+                    <ion-label position="floating">DNI</ion-label>
+                    <ion-input
+                      placeholder="Ingrese tu DNI"
+                      type="text"
+                      maxlength="8"
+                      [(ngModel)]="usuario.dni"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col class="ion-text-center" size="2">
+                  <ion-button
+                    size="small"
+                  >
+                    <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Nombres</ion-label>
+                    <ion-input
+                      [(ngModel)]="usuario.nombres"
+                      placeholder="Ingrese Nombres"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Apellidos</ion-label>
+                    <ion-input
+                      [(ngModel)]="usuario.apellidos"
+                      placeholder="Ingrese Apellidos"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+  
+                <ion-col size="12" style="padding-top: 13px">
+                  <ion-accordion-group>
+                    <ion-accordion value="start">
+                      <ion-item slot="header">
+                        <ion-label> Fecha de Nacimiento</ion-label>
+                        <ion-note slot="end"></ion-note>
+                      </ion-item>
+                      <ion-datetime
+                        id="date"
+                        slot="content"
+                        presentation="date"
+                        [(ngModel)]="usuario.fechaNacimiento"
+                      ></ion-datetime>
+                    </ion-accordion>
+                  </ion-accordion-group>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Teléfono</ion-label>
+                    <ion-input
+                      [(ngModel)]="usuario.celular"
+                      placeholder="Ingrese Teléfono"
+                      type="number"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Correo</ion-label>
+                    <ion-input
+                      type="email"
+                      placeholder="Ingrese Correo"
+                      pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                      [(ngModel)]="usuario.correo"
+                    ></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border" mode="ios" translucent (click)="volver()">
   <ion-toolbar>

@@ -12,4 +12,7 @@ export class PerfilComponent {
   volver() {
     return this.modalCtrl.dismiss();
   }
+  diClick(){
+    console.log('CLICK')
+  }
 }
