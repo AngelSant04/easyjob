@@ -2,7 +2,7 @@
   <div class="header">
     <div class="container-perfil">
       <div class="outer">
-        <ion-img [src]="usuario.imgUsuario"></ion-img>
+        <ion-img class="perfilPhoto" [src]="usuario.imgUsuario"></ion-img>
         <div class="inner" (click)="diClick()">
           <ion-icon name="camera" class="camera-icon"></ion-icon>
         </div>
@@ -30,6 +30,46 @@
   </div>
   <ion-grid fixed>
     <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Tu cuenta está verificada</ion-card-title>
+            <ion-card-subtitle
+              >¿Deseas ver o cambiar tu certificado?</ion-card-subtitle
+            >
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="6">
+                <ion-img src="/assets/verificado.png"></ion-img>
+              </ion-col>
+              <ion-col size="6">
+                <ion-grid fixed>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-button fill="clear"
+                        >Ver<ion-icon
+                          slot="end"
+                          name="arrow-forward"
+                        ></ion-icon
+                      ></ion-button>
+                    </ion-col>
+                    <ion-col size="12">
+                      <ion-button fill="clear"
+                        >Editar<ion-icon
+                          slot="end"
+                          name="arrow-forward"
+                        ></ion-icon
+                      ></ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
       <ion-col size="12">
         <ion-card>
           <ion-card-header>
@@ -81,9 +121,7 @@
                   </ion-item>
                 </ion-col>
                 <ion-col class="ion-text-center" size="2">
-                  <ion-button
-                    size="small"
-                  >
+                  <ion-button size="small">
                     <ion-icon slot="icon-only" name="search-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
@@ -105,7 +143,7 @@
                     ></ion-input>
                   </ion-item>
                 </ion-col>
-  
+
                 <ion-col size="12" style="padding-top: 13px">
                   <ion-accordion-group>
                     <ion-accordion value="start">

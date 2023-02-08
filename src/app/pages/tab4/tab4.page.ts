@@ -7,21 +7,20 @@ import {
 import { RevisarPostulantesComponent } from '../../components/revisar-postulantes/revisar-postulantes.component';
 import { StorageService } from '../../services/storage.service';
 import { PerfilComponent } from '../../components/perfil/perfil.component';
-import { Session } from '../../interfaces/Session';
 import { UsuariosService } from '../../services/usuarios.service';
-import { Usuario } from '../../interfaces/Usuario';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page {
+  loading:any;
   constructor(
     private modalCtrl: ModalController,
     private nav: NavController,
     private storageSrv: StorageService,
     private alertCtrl: AlertController,
-    private usuarioServ:UsuariosService
+    private usuarioServ:UsuariosService,
   ) {}
 
 
@@ -29,9 +28,12 @@ export class Tab4Page {
     let sesion:any;
     await this.storageSrv.getSesion().then(rep=>{
       sesion=rep;
+      
     });
+
     const user= this.usuarioServ.buscarXUsuario(sesion.userName);
     const modal = await this.modalCtrl.create({
+      
       component: PerfilComponent,
       componentProps:{
         usuario:user
@@ -68,4 +70,5 @@ export class Tab4Page {
     });
     await alert.present();
   }
+
 }

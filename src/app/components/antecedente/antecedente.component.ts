@@ -29,8 +29,8 @@ export class AntecedenteComponent {
       this.pdfFile= _event.target.files[0];
     }
   }
-  finalizar(){
-    this.modalCtrl.dismiss({
+  async finalizar(){
+    await this.modalCtrl.dismiss({
         pdfFile:this.pdfFile
     });
   }
