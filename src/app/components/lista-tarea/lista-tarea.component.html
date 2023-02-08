@@ -46,8 +46,9 @@
           
         </ion-card-content>
       
-        <ion-button *ngIf="tipo==='tab2'" fill="clear" (click)="postular(tarea.id ? tarea.id : '')">
-          <ion-icon style="font-size: 30px;" name="open-outline"></ion-icon>
+        <ion-button *ngIf="tipo==='tab2' && tipoSesion==='empleado'" fill="clear" (click)="postular(tarea.id ? tarea.id : '')">
+          <ion-icon slot="start" style="font-size: 30px;" name="open-outline"></ion-icon>
+          Postular
         </ion-button>
         <ion-button *ngIf="tipo==='tab4'" fill="clear" (click)="verPostulantes(tarea.id ? tarea.id : '')">
           Ver Postulantes

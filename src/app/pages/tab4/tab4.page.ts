@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   ModalController,
   NavController,
@@ -8,13 +8,15 @@ import { RevisarPostulantesComponent } from '../../components/revisar-postulante
 import { StorageService } from '../../services/storage.service';
 import { PerfilComponent } from '../../components/perfil/perfil.component';
 import { UsuariosService } from '../../services/usuarios.service';
+import { Preferences } from '@capacitor/preferences';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
-export class Tab4Page {
+export class Tab4Page implements OnInit {
   loading:any;
+  tipoSesion:string = ''
   constructor(
     private modalCtrl: ModalController,
     private nav: NavController,
@@ -22,6 +24,13 @@ export class Tab4Page {
     private alertCtrl: AlertController,
     private usuarioServ:UsuariosService,
   ) {}
+
+  async ngOnInit() {
+    let storage = await Preferences.get({key: 'session'});
+    let objetoStorage =  JSON.parse(storage.value!);
+    
+    this.tipoSesion = objetoStorage.tipoSesion;
+  }
 
 
   async verPerfil() {

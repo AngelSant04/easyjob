@@ -27,7 +27,7 @@ export class InfoRegistrarTareaPage implements OnInit {
   };
   loading:any;
 
-  listaCategoria: Categoria[] = [];
+  @Input() listaCategoria: Categoria[] = [];
   tipo:string = '';
 
   mensajeNombre: string = '';
@@ -42,10 +42,6 @@ export class InfoRegistrarTareaPage implements OnInit {
   async ngOnInit() {
 
     await this.presentLoading()
-
-    this.categoriaService.getCategorias().subscribe((resp) => {
-      this.listaCategoria = resp;
-    });
 
     if (this.tarea.id) {
       this.tipo = "modificar";

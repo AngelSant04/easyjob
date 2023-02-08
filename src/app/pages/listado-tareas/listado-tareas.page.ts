@@ -5,6 +5,8 @@ import { Tarea } from '../../interfaces/Tarea';
 import { Preferences } from '@capacitor/preferences';
 import { finalize } from 'rxjs';
 import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-tarea.page';
+import { Categoria } from '../../interfaces/Categoria';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-listado-tareas',
@@ -15,6 +17,7 @@ export class ListadoTareasPage implements OnInit {
 
   estadoTarea: string = 'publicado';
   tareas: Tarea[] = [];
+  categorias: Categoria[] = [];
   loading:any;
   tarea: Tarea = {
     id: '',
@@ -34,13 +37,17 @@ export class ListadoTareasPage implements OnInit {
   constructor(private modalCtrl: ModalController,
               private tareasService: TareasService,
               private loadingCtrl: LoadingController,
-              private alertCtrl: AlertController
+              private alertCtrl: AlertController,
+              private categoriaService:CategoriaService
     ) { }
 
   async ngOnInit() {
     let storage = await Preferences.get({key: 'session'});
     let objetoStorage =  JSON.parse(storage.value!);
     await this.presentLoading()
+    this.categoriaService.getCategorias().subscribe((resp) => {
+      this.categorias = resp;
+    });
     this.tareasService.getTareas().subscribe( resp => {
         this.tareas = resp.filter(e => e.estado === this.estadoTarea && e.idUserEmpleador === objetoStorage.idUsuario);
         this.loading.dismiss();
@@ -97,7 +104,8 @@ export class ListadoTareasPage implements OnInit {
       const modal = await this.modalCtrl.create({
         component: InfoRegistrarTareaPage,
         componentProps: {
-          tarea: this.tarea
+          tarea: this.tarea,
+          listaCategoria: this.categorias
         }
       });
       await modal.present();

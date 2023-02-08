@@ -4,6 +4,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { Tarea } from '../../interfaces/Tarea';
 import { TareasService } from '../../services/tareas.service';
 import { LoadingController } from '@ionic/angular';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-tab2',
@@ -16,6 +17,7 @@ export class Tab2Page implements OnInit{
   listaTareas: Tarea[] = [];
   loading:any;
   idCategoria:string = '';
+  tipoSesion: string = '';
 
   constructor(private categoriaService: CategoriaService,
               private tareasService: TareasService,
@@ -23,6 +25,12 @@ export class Tab2Page implements OnInit{
     ) {}
 
   async ngOnInit() {
+
+    let storage = await Preferences.get({key: 'session'});
+    let objetoStorage =  JSON.parse(storage.value!);
+    
+    this.tipoSesion = objetoStorage.tipoSesion;
+
     await this.presentLoading()
     this.categoriaService.getCategorias().subscribe((resp) => {
       this.listaCategoria = resp;

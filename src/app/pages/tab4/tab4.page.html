@@ -13,7 +13,7 @@
       <ion-label>Ver Perfil</ion-label>
       <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
     </ion-item>
-    <ion-item (click)="revisarPostulantes()">
+    <ion-item *ngIf="tipoSesion==='empleador'" (click)="revisarPostulantes()">
       <ion-icon slot="start" name="people-outline"></ion-icon>
       <ion-label>Revisar Postulantes</ion-label>
       <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>

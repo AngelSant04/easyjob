@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border" mode="ios" translucent>
   <ion-toolbar>
     <ion-title class="ion-text-capitalize ion-text-center cabecera textoTitulo">
-      Mis Tareas
+      Mi perfil
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <app-lista-tarea tab="tab3" [tareas]="listaTareas"></app-lista-tarea>
+  <app-lista-tarea tipo="tab3" [tareas]="listaTareas"></app-lista-tarea>
 
 
 </ion-content>
@@ -29,7 +29,7 @@
 
   <div (click)="registrarTarea()">
 
-    <h3 style="padding-top: 10%;">Registrar Nueva Tarea</h3>
+    <h3 style="padding-top: 3%;">Registrar Nueva Tarea</h3>
 
     <div class="cajaImagen ion-activatable ripple-parent rectangle">
       <ion-ripple-effect></ion-ripple-effect>  

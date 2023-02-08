@@ -17,6 +17,7 @@ export class ListaTareaComponent implements OnInit {
   @Input() tareas: Tarea[] = [];
   loading:any;
   @Input() tipo: string = 'tab2';
+  @Input() tipoSesion='empleado'
 
   constructor(private tareasService: TareasService,
               private loadingCtrl: LoadingController,
