@@ -18,6 +18,7 @@ export class Tab2Page implements OnInit{
   loading:any;
   idCategoria:string = '';
   tipoSesion: string = '';
+  idUsuario:string='';
 
   constructor(private categoriaService: CategoriaService,
               private tareasService: TareasService,
@@ -31,13 +32,15 @@ export class Tab2Page implements OnInit{
     
     this.tipoSesion = objetoStorage.tipoSesion;
 
+    this.idUsuario = objetoStorage.idUsuario;
+
     await this.presentLoading()
     this.categoriaService.getCategorias().subscribe((resp) => {
       this.listaCategoria = resp;
     });
 
     this.tareasService.getTareas().subscribe( resp => {
-        this.listaTareas = resp.filter(e => e.idCategoria === this.idCategoria && e.estado === 'publicado');
+        this.listaTareas = resp.filter(e => e.idUserEmpleador != this.idUsuario && e.estado === 'publicado');
         this.loading.dismiss();
       }
     );
@@ -47,7 +50,7 @@ export class Tab2Page implements OnInit{
 
     await this.presentLoading()
     this.tareasService.getTareas().subscribe( resp => {
-        this.listaTareas = resp.filter(e => e.idCategoria === this.idCategoria && e.estado === 'publicado');
+        this.listaTareas = resp.filter(e => e.idUserEmpleador != this.idUsuario && e.idCategoria === this.idCategoria && e.estado === 'publicado');
         this.loading.dismiss();
       }
     );

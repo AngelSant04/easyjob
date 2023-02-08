@@ -1,7 +1,7 @@
 .img {
-    width: 150px;    
-    height: 160px;
-    padding: 15px 0px;
+    width: 110px;    
+    height: 170px;
+    padding: 10px 0px;
 }
 .cajaImagen {
     display: flex;
@@ -11,8 +11,7 @@
 .ripple-parent {
     position: relative;
     overflow: hidden;
-
-    border: 1px solid #ddd;
+    border: 1px solid var(--ion-color-primary);
 }
 
 .rectangle {

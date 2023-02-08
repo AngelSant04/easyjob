@@ -5,6 +5,8 @@ import { ModalController, LoadingController, AlertController } from '@ionic/angu
 import { CategoriaService } from '../../services/categoria.service';
 import { Preferences } from '@capacitor/preferences';
 import { TareasService } from '../../services/tareas.service';
+import { format } from 'path';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-info-registrar-tarea',
@@ -33,6 +35,7 @@ export class InfoRegistrarTareaComponent implements OnInit {
   mensajeNombre: string = '';
   mensajeDescripcion: string = '';
   mensajeDireccion: string = '';
+
 
   constructor(private modalCtrl: ModalController,
       private categoriaService: CategoriaService,

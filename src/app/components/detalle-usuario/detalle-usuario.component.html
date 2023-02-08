@@ -49,17 +49,25 @@
       <ion-col size="6">
         {{usuario.usuario}}
       </ion-col>
-      <ion-col size="6">
-        <ion-button fill="outline" (click)="cancel()" expand="block">
-          Volver
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button (click)="aceptarPostulante(usuario.usuario)" expand="block">
-          Aceptar
-        </ion-button>
-      </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>
+
+<ion-footer class="ion-no-border" translucent>
+  <ion-toolbar>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button fill="outline" (click)="cancel()" expand="block">
+            Volver
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button (click)="aceptarPostulante(usuario.usuario)" expand="block">
+            Aceptar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

@@ -2,10 +2,11 @@
 
   <ion-row class="ion-text-center"  *ngFor="let tarea of tareas">
     <ion-col>
-      <ion-card>
+      <ion-card style="border-radius: 10px; border: 1px solid var(--ion-color-primary);">
         <ion-card-header>
           <ion-card-title>{{tarea.nombre}}</ion-card-title>
-        </ion-card-header>
+          <hr color="skyblue" noshade="noshade" size="1">
+        </ion-card-header> 
       
         <ion-card-content>
 
@@ -45,7 +46,8 @@
           </ion-grid>
           
         </ion-card-content>
-      
+
+        <hr color="skyblue" noshade="noshade" size="2">
         <ion-button *ngIf="tipo==='tab2' && tipoSesion==='empleado'" fill="clear" (click)="postular(tarea.id ? tarea.id : '')">
           <ion-icon slot="start" style="font-size: 30px;" name="open-outline"></ion-icon>
           Postular
@@ -60,9 +62,6 @@
         <ion-button *ngIf="tipo==='listadoTareas'" fill="clear" (click)="eliminar(tarea.id ? tarea.id : '')">
           <ion-icon style="font-size: 30px;" name="trash-outline"></ion-icon>
         </ion-button>
-        <!-- <ion-button fill="clear" (click)="eliminar(tarea.id ? tarea.id : '')">
-          <ion-icon style="font-size: 30px;" name="trash-outline"></ion-icon>
-        </ion-button> -->
       </ion-card>
     </ion-col>
   </ion-row>
