@@ -6,6 +6,9 @@ import { LoadingController, AlertController, ModalController } from '@ionic/angu
 import { DetalleTareaComponent } from '../detalle-tarea/detalle-tarea.component';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Usuario } from '../../interfaces/Usuario';
+import { Categoria } from '../../interfaces/Categoria';
+import { CategoriaService } from '../../services/categoria.service';
+import { InfoRegistrarTareaComponent } from '../info-registrar-tarea/info-registrar-tarea.component';
 
 @Component({
   selector: 'app-lista-tarea',
@@ -15,19 +18,23 @@ import { Usuario } from '../../interfaces/Usuario';
 export class ListaTareaComponent implements OnInit {
 
   @Input() tareas: Tarea[] = [];
-  loading:any;
   @Input() tipo: string = 'tab2';
-  @Input() tipoSesion='empleado'
+  @Input() tipoSesion='empleado';
+  categorias: Categoria[] = [];
+  loading:any;
 
   constructor(private tareasService: TareasService,
               private loadingCtrl: LoadingController,
               private alertCtrl: AlertController,
               private modalCtrl: ModalController,
-              private userService: UsuariosService
+              private userService: UsuariosService,
+              private categoriaService:CategoriaService
     ) { }
 
   ngOnInit() {
-
+    this.categoriaService.getCategorias().subscribe((resp) => {
+      this.categorias = resp;
+    });
   }
 
   async postular(id: string){
@@ -90,6 +97,44 @@ export class ListaTareaComponent implements OnInit {
       duration: 20000
     });
     await this.loading.present();
+  }
+
+  async eliminar(id:string){
+    
+    if (id) {
+      
+      await this.presentLoading();
+
+      await this.tareasService.borrarTarea(id).then(resp => {
+        this.loading.dismiss();
+      }).catch(e => {
+        this.loading.dismiss();
+        throw e;
+      })
+      const alert = await this.alertCtrl.create({
+        header: 'Tarea Eliminada',
+        message: 'Tarea eliminada exitosamente',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+    
+  }
+
+  async editar(tareaAux:Tarea){
+
+    if (tareaAux.id) {
+      
+      const modal = await this.modalCtrl.create({
+        component: InfoRegistrarTareaComponent,
+        componentProps: {
+          tarea: tareaAux,
+          listaCategoria: this.categorias
+        }
+      });
+      await modal.present();   
+    }
+    
   }
 
 }

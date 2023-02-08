@@ -11,6 +11,8 @@ import { AntecedenteComponent } from './antecedente/antecedente.component';
 import { SwiperModule } from 'swiper/angular';
 import { PerfilComponent } from './perfil/perfil.component';
 import { FormsModule } from '@angular/forms';
+import { ListadoTareasComponent } from './listado-tareas/listado-tareas.component';
+import { InfoRegistrarTareaComponent } from './info-registrar-tarea/info-registrar-tarea.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -21,13 +23,17 @@ import { FormsModule } from '@angular/forms';
     DetalleUsuarioComponent,
     ListaTareaComponent,
     AntecedenteComponent,
-    PerfilComponent
+    PerfilComponent,
+    ListadoTareasComponent,
+    InfoRegistrarTareaComponent
   ],
   exports:[
     HeaderComponent,
     TipoSesionComponent,
     ListaTareaComponent,
     RevisarPostulantesComponent,
+    ListadoTareasComponent,
+    InfoRegistrarTareaComponent
   ],
   imports: [
     CommonModule,

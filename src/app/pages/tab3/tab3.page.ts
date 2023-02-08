@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
-import { InfoRegistrarTareaPage } from '../info-registrar-tarea/info-registrar-tarea.page';
 import { TareasService } from '../../services/tareas.service';
-import { ListadoTareasPage } from '../listado-tareas/listado-tareas.page';
 import { Preferences } from '@capacitor/preferences';
 import * as EventEmitter from 'events';
 import { Tarea } from '../../interfaces/Tarea';
+import { InfoRegistrarTareaComponent } from '../../components/info-registrar-tarea/info-registrar-tarea.component';
+import { Categoria } from '../../interfaces/Categoria';
+import { CategoriaService } from '../../services/categoria.service';
+import { ListadoTareasComponent } from '../../components/listado-tareas/listado-tareas.component';
 
 @Component({
   selector: 'app-tab3',
@@ -19,20 +21,27 @@ export class Tab3Page implements OnInit{
   tipoSegment:string = 'postulaciones';
   listaTareas: Tarea[] = [];
   idUsuario:string = '';
+  categorias:Categoria[]=[];
 
   constructor(private modalCtrl: ModalController,
               private tareasService: TareasService,
               private loadingCtrl: LoadingController,
-              private alertCtrl: AlertController
+              private alertCtrl: AlertController,
+              private categoriaService: CategoriaService
     ) {}
 
   async ngOnInit(){
+    await this.presentLoading()
     let storage = await Preferences.get({key: 'session'});
     let objetoStorage =  JSON.parse(storage.value!);
     
     this.tipoSesion = objetoStorage.tipoSesion;
 
     this.idUsuario = objetoStorage.idUsuario
+
+    this.categoriaService.getCategorias().subscribe(resp=>{
+      this.categorias = resp;
+    })
     
     this.tareasService.getTareas().subscribe(resp => {
       this.listaTareas = resp.filter(tarea =>{
@@ -45,41 +54,24 @@ export class Tab3Page implements OnInit{
         }
         
       })
+      this.loading.dismiss();
     })
     
   }
 
   async registrarTarea(){
     const modal = await this.modalCtrl.create({
-      component: InfoRegistrarTareaPage,
+      component: InfoRegistrarTareaComponent,
+      componentProps:{
+        listaCategoria: this.categorias
+      }
     });
     await modal.present();
-
-    const { data } = await modal.onWillDismiss()
-    
-    if (data) {
-
-      await this.presentLoading();
-      await this.tareasService.agregarTarea(data.tarea).then(resp => {
-        this.loading.dismiss();
-      }).catch(e => {
-        this.loading.dismiss();
-        throw e;
-      })
-      const alert = await this.alertCtrl.create({
-        header: 'Tarea Registrada',
-        message: 'Tarea registrada exitosamente',
-        buttons: ['OK'],
-      });
-      await alert.present();
-
-    }
-    
   }
 
   async listarTareas(){
     const modal = await this.modalCtrl.create({
-      component: ListadoTareasPage,
+      component: ListadoTareasComponent,
     });
     await modal.present();
     
@@ -88,7 +80,7 @@ export class Tab3Page implements OnInit{
   async presentLoading() {
     this.loading = await this.loadingCtrl.create({
       message: 'Procesando...',
-      duration: 20000
+      duration: 2
     });
     await this.loading.present();
   }

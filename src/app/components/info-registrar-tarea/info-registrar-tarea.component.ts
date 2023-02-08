@@ -1,16 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, LoadingController } from '@ionic/angular';
-import { CategoriaService } from 'src/app/services/categoria.service';
 import { Tarea } from '../../interfaces/Tarea';
 import { Categoria } from '../../interfaces/Categoria';
+import { ModalController, LoadingController, AlertController } from '@ionic/angular';
+import { CategoriaService } from '../../services/categoria.service';
 import { Preferences } from '@capacitor/preferences';
+import { TareasService } from '../../services/tareas.service';
 
 @Component({
   selector: 'app-info-registrar-tarea',
-  templateUrl: './info-registrar-tarea.page.html',
-  styleUrls: ['./info-registrar-tarea.page.scss'],
+  templateUrl: './info-registrar-tarea.component.html',
+  styleUrls: ['./info-registrar-tarea.component.scss'],
 })
-export class InfoRegistrarTareaPage implements OnInit {
+export class InfoRegistrarTareaComponent implements OnInit {
 
   @Input() tarea: Tarea = {
     idCategoria : '',
@@ -25,9 +26,8 @@ export class InfoRegistrarTareaPage implements OnInit {
     idUserEmpleador: '',
     postulantes: [],
   };
-  loading:any;
-
   @Input() listaCategoria: Categoria[] = [];
+  loading:any;
   tipo:string = '';
 
   mensajeNombre: string = '';
@@ -37,19 +37,16 @@ export class InfoRegistrarTareaPage implements OnInit {
   constructor(private modalCtrl: ModalController,
       private categoriaService: CategoriaService,
       private loadingCtrl: LoadingController,
+      private tareasService:TareasService,
+      private alertCtrl: AlertController,
     ) { }
 
-  async ngOnInit() {
-
-    await this.presentLoading()
-
+  ngOnInit() {
     if (this.tarea.id) {
       this.tipo = "modificar";
     } else {
       this.tipo = "nuevo";
     }
-
-    this.loading.dismiss();
   }
 
   cancel() {
@@ -63,18 +60,55 @@ export class InfoRegistrarTareaPage implements OnInit {
     let storage = await Preferences.get({key: 'session'});
     let objetoStorage =  JSON.parse(storage.value!);
     this.tarea.idUserEmpleador = objetoStorage.idUsuario;
-    return this.modalCtrl.dismiss({
-      tarea: this.tarea,
-    });
+
+    if (this.tarea) {
+      
+      await this.presentLoading();    
+      await this.tareasService.agregarTarea(this.tarea).then(resp => {
+        this.loading.dismiss();
+      }).catch(e => {
+        this.loading.dismiss();
+        throw e;
+      })
+      const alert = await this.alertCtrl.create({
+        header: 'Tarea Registrada',
+        message: 'Tarea registrada exitosamente',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.cancel()
+          }
+        }],
+      });
+      await alert.present();
+    }
   }
 
   async modificar() {
     let storage = await Preferences.get({key: 'session'});
     let objetoStorage =  JSON.parse(storage.value!);
     this.tarea.idUserEmpleador = objetoStorage.idUsuario;
-    return this.modalCtrl.dismiss({
-      tarea: this.tarea,
-    });
+    if (this.tarea.id) {
+
+      await this.presentLoading();
+      await this.tareasService.modificarTarea(this.tarea, this.tarea.id).then(resp => {
+        this.loading.dismiss();
+      }).catch(e => {
+        this.loading.dismiss();
+        throw e;
+      })
+      const alert = await this.alertCtrl.create({
+        header: 'Tarea Modificada',
+        message: 'Tarea modificada exitosamente',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.cancel()
+          }
+        }],
+      });
+      await alert.present();
+    }
   }
 
   async presentLoading() {

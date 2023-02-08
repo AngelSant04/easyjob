@@ -54,6 +54,12 @@
           Ver Postulantes
           <ion-icon slot="start" style="font-size: 30px;" name="people-outline"></ion-icon>
         </ion-button>
+        <ion-button *ngIf="tipo==='listadoTareas'" fill="clear" (click)="editar(tarea)">
+          <ion-icon style="font-size: 30px;" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="tipo==='listadoTareas'" fill="clear" (click)="eliminar(tarea.id ? tarea.id : '')">
+          <ion-icon style="font-size: 30px;" name="trash-outline"></ion-icon>
+        </ion-button>
         <!-- <ion-button fill="clear" (click)="eliminar(tarea.id ? tarea.id : '')">
           <ion-icon style="font-size: 30px;" name="trash-outline"></ion-icon>
         </ion-button> -->
