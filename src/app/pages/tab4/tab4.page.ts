@@ -41,11 +41,13 @@ export class Tab4Page implements OnInit {
     });
 
     const user= this.usuarioServ.buscarXUsuario(sesion.userName);
+    const session= this.storageSrv.getSesion();
     const modal = await this.modalCtrl.create({
       
       component: PerfilComponent,
       componentProps:{
-        usuario:user
+        usuario:user,
+        sesion:session
       }
     });
     await modal.present();
