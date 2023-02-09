@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController ,ModalController} from '@ionic/angular';
+import {
+  AlertController,
+  LoadingController,
+  ModalController,
+} from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Usuario } from '../../interfaces/Usuario';
 import { UsuariosService } from '../../services/usuarios.service';
@@ -11,7 +15,7 @@ import { AntecedenteComponent } from 'src/app/components/antecedente/antecedente
   styleUrls: ['./registro-usuario.page.scss'],
 })
 export class RegistroUsuarioPage implements OnInit {
-  searchButton:boolean=true;
+  searchButton: boolean = true;
   mostrar: string = 'password';
   bandera!: boolean;
   usuario: Usuario = {
@@ -38,7 +42,7 @@ export class RegistroUsuarioPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
     private loadingcrtl: LoadingController,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -62,27 +66,39 @@ export class RegistroUsuarioPage implements OnInit {
     if (!validUser.length) {
       const modal = await this.modalCtrl.create({
         component: AntecedenteComponent,
-      })
-      await modal.present();
-      const {data}= await modal.onWillDismiss();
-      await this.presentLoading();
-      await this.userSrv
-        .agregarUsuario(this.usuario, this.imgFile,data.pdfFile)
-        .then(() => {
-          this.loading.dismiss();
-        })
-        .catch((err) => {
-          this.loading.dismiss();
-          throw err;
-        });
-      const alert = await this.alertCtrl.create({
-        header: 'Registro Exitoso',
-        message: `Vuelve a iniciar sesión`,
-        buttons: ['Continuar'],
       });
-      await alert.present();
-      await alert.onDidDismiss();
-      this.router.navigate(['']);
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      await this.presentLoading();
+      this.userSrv.buscarDNI(this.usuario.dni).subscribe(async (rep) => {
+        if (rep.success) {
+          await this.userSrv
+            .agregarUsuario(this.usuario, this.imgFile, data.pdfFile)
+            .then(() => {
+              this.loading.dismiss();
+            })
+            .catch((err) => {
+              this.loading.dismiss();
+              throw err;
+            });
+          const alert = await this.alertCtrl.create({
+            header: 'Registro Exitoso',
+            message: `Vuelve a iniciar sesión`,
+            buttons: ['Continuar'],
+          });
+          await alert.present();
+          await alert.onDidDismiss();
+          this.router.navigate(['']);
+        } else {
+          this.loading.dismiss();
+          const alert = await this.alertCtrl.create({
+            header: 'Error',
+            message: `DNI Incorrecto`,
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+      });
     } else {
       const alert = await this.alertCtrl.create({
         header: 'Error',
@@ -148,13 +164,13 @@ export class RegistroUsuarioPage implements OnInit {
     await this.loading.present();
   }
   async buscarDNI() {
-    await this.presentLoading()
+    await this.presentLoading();
     this.userSrv.buscarDNI(this.usuario.dni).subscribe(async (rep) => {
       if (rep.success) {
         this.loading.dismiss();
         this.usuario.nombres = rep.data.nombres;
         this.usuario.apellidos = `${rep.data.apellido_paterno} ${rep.data.apellido_materno}`;
-      }else{
+      } else {
         this.loading.dismiss();
         const alert = await this.alertCtrl.create({
           header: 'Error',
@@ -173,11 +189,10 @@ export class RegistroUsuarioPage implements OnInit {
       // invalid character, prevent input
       event.preventDefault();
     }
-   
   }
-  iconSearchValidation(){
-    const cadena = this.usuario.dni.length
-    if(cadena>0)this.searchButton=false;
-    else this.searchButton=true;
+  iconSearchValidation() {
+    const cadena = this.usuario.dni.length;
+    if (cadena > 0) this.searchButton = false;
+    else this.searchButton = true;
   }
 }
