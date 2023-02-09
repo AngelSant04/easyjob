@@ -85,7 +85,28 @@ export class UsuariosService {
     }
     return mensaje;
   }
+  validarUsuario(usuario: Usuario){
+    const validUser = this.listaUsuarios.find((user) => {
+      return user.usuario === usuario.usuario;
+    });
+    if (validUser) {
+      return false
+      
+    }
+    return true;
+  }
+  validarCorreo(usuario: Usuario){
+    const validUser = this.listaUsuarios.find((user) => {
+      return user.correo === usuario.correo;
+    });
+    if (validUser) {
+      return false
+      
+    }
+    return true;
+  }
   async validarCuenta(usuario: string, password: string) {
+
     const user = this.listaUsuarios.find(
       (user) => user.usuario === usuario && user.clave === password
     );
