@@ -164,7 +164,20 @@ export class PerfilComponent implements OnInit {
       if (validUser) {
         this.btnCardPersonal = true;
         this.searchButton=true;
-        await this.actualizar();
+        this.userSrv.buscarDNI(this.userAux.dni).subscribe(async (rep) => {
+          if (rep.success) {
+            await this.actualizar();
+          }else{
+            this.searchButton=false;
+            const alert = await this.alertCtrl.create({
+              header: 'Error',
+              message: `DNI Incorrecto`,
+              buttons: ['OK'],
+            });
+            await alert.present();
+          }
+        });
+        
       } else {
         const alert = await this.alertCtrl.create({
           header: 'Error',
@@ -249,6 +262,24 @@ export class PerfilComponent implements OnInit {
         });
         await alert.present();
         await alert.onDidDismiss();
+  }
+  async buscarDNI() {
+    await this.presentLoading()
+    this.userSrv.buscarDNI(this.userAux.dni).subscribe(async (rep) => {
+      if (rep.success) {
+        this.loading.dismiss();
+        this.userAux.nombres = rep.data.nombres;
+        this.userAux.apellidos = `${rep.data.apellido_paterno} ${rep.data.apellido_materno}`;
+      }else{
+        this.loading.dismiss();
+        const alert = await this.alertCtrl.create({
+          header: 'Error',
+          message: `DNI Incorrecto`,
+          buttons: ['OK'],
+        });
+        await alert.present();
+      }
+    });
   }
   numberOnlyValidation(event: any) {
     //pattern
