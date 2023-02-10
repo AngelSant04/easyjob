@@ -1,4 +1,4 @@
-.header{
+.main::part(background) {
     background-color:#8BD4C9;
 }
 .container-perfil{
@@ -22,9 +22,9 @@
     position: relative;
 }
 .inner{
-  background-color: #2D3E50;
-  width: 30%;
-  height: 30%;
+  background: #2D3E50;
+  width: 25%;
+  height: 25%;
   border-radius: 100%;
   position: absolute;
   bottom: 0;
@@ -33,9 +33,13 @@
   align-items: center;
   justify-content: center;
 }
+.inner:active{
+
+    background: #516072;
+}
 .camera-icon{
-    height: 60%;
-    width: 60%;
+    height: 50%;
+    width: 50%;
     color: white; 
 }
 .container-nombre{

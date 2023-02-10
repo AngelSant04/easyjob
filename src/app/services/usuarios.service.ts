@@ -55,6 +55,22 @@ export class UsuariosService {
     const ref = doc(this.firestore, `usuarios/${id}`);
     return deleteDoc(ref);
   }
+  async actualizarUsuario(usuario:Usuario){
+    const ref = doc(this.firestore, `usuarios/${usuario.id}`);
+    return await updateDoc(ref, {
+      apellidos: usuario.apellidos,
+      celular: usuario.celular,
+      clave: usuario.clave,
+      correo: usuario.correo,
+      cuentaValidada: usuario.cuentaValidada,
+      dni: usuario.dni,
+      fechaNacimiento:usuario.fechaNacimiento,
+      imgUsuario:usuario.imgUsuario,
+      nombres:usuario.nombres,
+      pdfCuenta:usuario.pdfCuenta,
+      usuario:usuario.usuario
+    })
+  }
   validarRegistro(usuario: Usuario) {
     let mensaje = '';
     const validUser = this.listaUsuarios.find((user) => {
@@ -69,7 +85,28 @@ export class UsuariosService {
     }
     return mensaje;
   }
+  validarUsuario(usuario: Usuario){
+    const validUser = this.listaUsuarios.find((user) => {
+      return user.usuario === usuario.usuario;
+    });
+    if (validUser) {
+      return false
+      
+    }
+    return true;
+  }
+  validarCorreo(usuario: Usuario){
+    const validUser = this.listaUsuarios.find((user) => {
+      return user.correo === usuario.correo;
+    });
+    if (validUser) {
+      return false
+      
+    }
+    return true;
+  }
   async validarCuenta(usuario: string, password: string) {
+
     const user = this.listaUsuarios.find(
       (user) => user.usuario === usuario && user.clave === password
     );
@@ -93,4 +130,5 @@ export class UsuariosService {
       return null;
     }
   }
+
 }

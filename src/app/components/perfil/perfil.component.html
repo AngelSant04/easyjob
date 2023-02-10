@@ -1,64 +1,98 @@
-<ion-content>
-  <div class="header">
+<ion-content class="main">
+  <div>
     <div class="container-perfil">
       <div class="outer">
-        <ion-img class="perfilPhoto" [src]="usuario.imgUsuario"></ion-img>
-        <div class="inner" (click)="diClick()">
+        <ion-img class="perfilPhoto" [src]="userAux.imgUsuario"></ion-img>
+        <div class="inner" (click)="openFileDialog('img')">
+          <input
+            type="text"
+            type="file"
+            id="imagen-perfil"
+            style="display: none"
+            accept=".jpg, .png, .jpeg"
+            (change)="cargarArchivo($event, 'img')"
+          />
           <ion-icon name="camera" class="camera-icon"></ion-icon>
         </div>
       </div>
     </div>
-    <!-- <div class="container-nombre">
-      <ion-row>
-        <ion-col size="10">
-          <p>
-            {{ usuario.nombres }} <br />
-            {{ usuario.apellidos }}
-          </p>
-        </ion-col>
-        <ion-col align="right" size="2">
-          <ion-button fill="clear">
-            <ion-icon
-              slot="icon-only"
-              name="pencil-outline"
-              style="font-size: 20px; color: #2d3e50"
-            ></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </div> -->
   </div>
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Tu cuenta está verificada</ion-card-title>
-            <ion-card-subtitle
-              >¿Deseas ver o cambiar tu certificado?</ion-card-subtitle
-            >
+            <ion-card-title>{{
+              userAux.cuentaValidada
+                ? "Tu cuenta está verificada"
+                : "Tu cuenta no esta verificada"
+            }}</ion-card-title>
+            <ion-card-subtitle>{{
+              userAux.cuentaValidada
+                ? "¿Deseas ver o cambiar tu certificado?"
+                : "Al subir tu certificado único laboral, podremos verificar tu cuenta," +
+                  " esto hará que muchos usuarios se sientan seguros de trabajar contigo"
+            }}</ion-card-subtitle>
           </ion-card-header>
 
           <ion-card-content>
             <ion-row>
               <ion-col size="6">
-                <ion-img src="/assets/verificado.png"></ion-img>
+                <ion-img
+                  *ngIf="userAux.cuentaValidada"
+                  src="/assets/verificado.png"
+                ></ion-img>
+                <ion-img
+                  *ngIf="!userAux.cuentaValidada"
+                  src="/assets/report.png"
+                ></ion-img>
               </ion-col>
               <ion-col size="6">
                 <ion-grid fixed>
                   <ion-row>
                     <ion-col size="12">
-                      <ion-button fill="clear"
-                        >Ver<ion-icon
+                      <ion-button
+                        fill="clear"
+                        *ngIf="userAux.cuentaValidada"
+                        (click)="openBrowser()"
+                        >Ver<ion-icon slot="end" name="arrow-forward"></ion-icon
+                      ></ion-button>
+                    </ion-col>
+                    <ion-col size="12">
+                      <input
+                        type="text"
+                        type="file"
+                        id="subida-archivo"
+                        style="display: none"
+                        accept="application/pdf"
+                        (change)="cargarArchivo($event, 'pdf')"
+                      />
+                      <ion-button
+                        fill="clear"
+                        *ngIf="userAux.cuentaValidada"
+                        (click)="openFileDialog('pdf')"
+                        >Editar<ion-icon
                           slot="end"
                           name="arrow-forward"
                         ></ion-icon
                       ></ion-button>
-                    </ion-col>
-                    <ion-col size="12">
-                      <ion-button fill="clear"
-                        >Editar<ion-icon
+                      <ion-button
+                        fill="clear"
+                        *ngIf="!userAux.cuentaValidada"
+                        (click)="openFileDialog('pdf')"
+                        >Subir<ion-icon
                           slot="end"
+                          name="arrow-forward"
+                        ></ion-icon
+                      ></ion-button>
+                      <ion-button
+                        color="danger"
+                        fill="clear"
+                        *ngIf="userAux.cuentaValidada"
+                        (click)="eliminarCertificado()"
+                        >Eliminar<ion-icon
+                          slot="end"
+                          color="danger"
                           name="arrow-forward"
                         ></ion-icon
                       ></ion-button>
@@ -82,19 +116,61 @@
                   <ion-item>
                     <ion-label position="floating">Usuario</ion-label>
                     <ion-input
-                      [(ngModel)]="usuario.usuario"
+                      [(ngModel)]="userAux.usuario"
                       placeholder="Nombre de Usuario"
+                      [disabled]="btnCardCuenta"
                     ></ion-input>
                   </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label *ngIf="mensajeUsuario" class="error">{{
+                    mensajeUsuario
+                  }}</ion-label>
                 </ion-col>
                 <ion-col size="11">
                   <ion-item>
                     <ion-label position="floating">Contraseña</ion-label>
                     <ion-input
-                      [(ngModel)]="usuario.clave"
+                      [(ngModel)]="userAux.clave"
                       placeholder="Contraseña"
+                      [type]="mostrar"
+                      [disabled]="btnCardCuenta"
                     ></ion-input>
                   </ion-item>
+                </ion-col>
+                <ion-col class="ion-text-center" size="1">
+                  <ion-icon
+                    (click)="verClave()"
+                    style="padding-top: 30px; font-size: 25px"
+                    name="eye-outline"
+                  ></ion-icon>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label *ngIf="mensajeClave" class="error">{{
+                    mensajeClave
+                  }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-button
+                    expand="block"
+                    fill="clear"
+                    *ngIf="btnCardCuenta"
+                    (click)="btnCardCuenta = false"
+                  >
+                    Editar
+                  </ion-button>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-button
+                    expand="block"
+                    fill="clear"
+                    *ngIf="!btnCardCuenta"
+                    (click)="actCuenta()"
+                  >
+                    Guardar
+                  </ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -116,21 +192,30 @@
                       placeholder="Ingrese tu DNI"
                       type="text"
                       maxlength="8"
-                      [(ngModel)]="usuario.dni"
+                      [(ngModel)]="userAux.dni"
+                      [disabled]="btnCardPersonal"
+                      (keypress)="numberOnlyValidation($event)"
+                      (ngModelChange)="iconSearchValidation()"
                     ></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col class="ion-text-center" size="2">
-                  <ion-button size="small">
+                  <ion-button size="small" [disabled]="searchButton" (click)="buscarDNI()">
                     <ion-icon slot="icon-only" name="search-outline"></ion-icon>
                   </ion-button>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label *ngIf="mensajeDNI" class="error">{{
+                    mensajeDNI
+                  }}</ion-label>
                 </ion-col>
                 <ion-col size="6">
                   <ion-item>
                     <ion-label position="floating">Nombres</ion-label>
                     <ion-input
-                      [(ngModel)]="usuario.nombres"
+                      [(ngModel)]="userAux.nombres"
                       placeholder="Ingrese Nombres"
+                      [disabled]="btnCardPersonal"
                     ></ion-input>
                   </ion-item>
                 </ion-col>
@@ -138,12 +223,22 @@
                   <ion-item>
                     <ion-label position="floating">Apellidos</ion-label>
                     <ion-input
-                      [(ngModel)]="usuario.apellidos"
+                      [(ngModel)]="userAux.apellidos"
                       placeholder="Ingrese Apellidos"
+                      [disabled]="btnCardPersonal"
                     ></ion-input>
                   </ion-item>
                 </ion-col>
-
+                <ion-col size="6">
+                  <ion-label *ngIf="mensajeNombre" class="error">{{
+                    mensajeNombre
+                  }}</ion-label>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label *ngIf="mensajeApellido" class="error">{{
+                    mensajeApellido
+                  }}</ion-label>
+                </ion-col>
                 <ion-col size="12" style="padding-top: 13px">
                   <ion-accordion-group>
                     <ion-accordion value="start">
@@ -155,7 +250,8 @@
                         id="date"
                         slot="content"
                         presentation="date"
-                        [(ngModel)]="usuario.fechaNacimiento"
+                        [(ngModel)]="userAux.fechaNacimiento"
+                        [disabled]="btnCardPersonal"
                       ></ion-datetime>
                     </ion-accordion>
                   </ion-accordion-group>
@@ -164,11 +260,17 @@
                   <ion-item>
                     <ion-label position="floating">Teléfono</ion-label>
                     <ion-input
-                      [(ngModel)]="usuario.celular"
+                      [(ngModel)]="userAux.celular"
                       placeholder="Ingrese Teléfono"
                       type="number"
+                      [disabled]="btnCardPersonal"
                     ></ion-input>
                   </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label *ngIf="mensajeTelefono" class="error">{{
+                    mensajeTelefono
+                  }}</ion-label>
                 </ion-col>
                 <ion-col size="12">
                   <ion-item>
@@ -177,9 +279,38 @@
                       type="email"
                       placeholder="Ingrese Correo"
                       pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
-                      [(ngModel)]="usuario.correo"
+                      [(ngModel)]="userAux.correo"
+                      [disabled]="btnCardPersonal"
                     ></ion-input>
                   </ion-item>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-label *ngIf="mensajeCorreo" class="error">{{
+                    mensajeCorreo
+                  }}</ion-label>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-button
+                    expand="block"
+                    fill="clear"
+                    (click)="btnCardPersonal = false" 
+                    (click)="searchButton=false"
+                    *ngIf="btnCardPersonal"
+                  >
+                    Editar
+                  </ion-button>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-button
+                    expand="block"
+                    fill="clear"
+                    *ngIf="!btnCardPersonal"
+                    (click)="actDatosPersonales()"
+                  >
+                    Guardar
+                  </ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>
