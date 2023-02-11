@@ -49,6 +49,15 @@
       <ion-col size="6">
         {{usuario.usuario}}
       </ion-col>
+      <ion-col size="6">
+        Antecedentes Penales
+      </ion-col>
+      <ion-col size="6">
+        <ion-button (click)="verPdf(usuario.pdfCuenta)" expand="block" fill="clear" color="danger">
+          Ver Pdf
+          <ion-img slot="end" src="/assets/pdf.png" style="width: 80px; height: 80px;"></ion-img>
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

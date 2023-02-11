@@ -3,6 +3,7 @@ import { Usuario } from '../../interfaces/Usuario';
 import { ModalController, LoadingController, AlertController } from '@ionic/angular';
 import { TareasService } from '../../services/tareas.service';
 import { Router } from '@angular/router';
+import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'app-detalle-usuario',
@@ -23,6 +24,8 @@ export class DetalleUsuarioComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    console.log(this.usuario);
+    
   }
 
   cancel() {
@@ -53,6 +56,10 @@ export class DetalleUsuarioComponent implements OnInit {
       duration: 20000
     });
     await this.loading.present();
+  }
+
+  async verPdf(linkPdf:any){
+    await Browser.open({ url: `${linkPdf}` });
   }
 
 }
