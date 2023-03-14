@@ -11,7 +11,9 @@ export const environment = {
   },
   apiKey:'?api_token=8530e6ef219a32b9dedb067db776ac3a64f5f8225c77b78fc81a30ffed78d1a7',
   apiUrl:'http://apiperu.dev/api/dni/',
-  production: true
+  production: true,
+  apiBaseUrl: 'https://backend-dev.ide-app.com:',
+  puerto: '6050',
 }
 
 
