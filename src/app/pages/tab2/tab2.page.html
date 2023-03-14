@@ -12,7 +12,7 @@
 
     <ion-label>Categoria</ion-label>
     <ion-select placeholder="Categoria" [(ngModel)]="idCategoria" (ionChange)="cambiarCategoria($event)">
-      <ion-select-option *ngFor="let item of listaCategoria" [value]="item.id">{{item.nombre}}</ion-select-option>
+      <ion-select-option *ngFor="let item of listaCategoria" [value]="item.id">{{item.id}}-{{item.descripcion}}</ion-select-option>
     </ion-select>
 
   </ion-item>

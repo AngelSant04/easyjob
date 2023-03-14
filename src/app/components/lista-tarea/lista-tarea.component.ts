@@ -32,8 +32,8 @@ export class ListaTareaComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.categoriaService.getCategorias().subscribe((resp) => {
-      this.categorias = resp;
+    this.categoriaService.getCategorias('/api/Categoria/listarCategoria').subscribe((resp) => {
+      this.categorias = resp.objeto;
     });
   }
 

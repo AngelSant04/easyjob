@@ -39,8 +39,8 @@ export class Tab3Page implements OnInit{
 
     this.idUsuario = objetoStorage.idUsuario
 
-    this.categoriaService.getCategorias().subscribe(resp=>{
-      this.categorias = resp;
+    this.categoriaService.getCategorias('/api/Categoria/listarCategoria').subscribe(resp=>{
+      this.categorias = resp.objeto;
     })
     
     this.tareasService.getTareas().subscribe(resp => {

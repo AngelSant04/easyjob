@@ -35,8 +35,8 @@ export class Tab2Page implements OnInit{
     this.idUsuario = objetoStorage.idUsuario;
 
     await this.presentLoading()
-    this.categoriaService.getCategorias().subscribe((resp) => {
-      this.listaCategoria = resp;
+    this.categoriaService.getCategorias('/api/Categoria/listarCategoria').subscribe((resp) => {
+      this.listaCategoria = resp.objeto;
     });
 
     this.tareasService.getTareas().subscribe( resp => {

@@ -27,7 +27,7 @@
       <ion-col size="6">
         <ion-item style="padding-top: 7px;">
           <ion-select placeholder="Categoria" [(ngModel)]="tarea.idCategoria">
-            <ion-select-option *ngFor="let item of listaCategoria" [value]="item.id">{{item.nombre}}</ion-select-option>
+            <ion-select-option *ngFor="let item of listaCategoria" [value]="item.id">{{item.descripcion}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>

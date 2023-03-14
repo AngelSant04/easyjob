@@ -45,6 +45,7 @@ export class InfoRegistrarTareaComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    console.log(this.listaCategoria);
     if (this.tarea.id) {
       this.tipo = "modificar";
     } else {
