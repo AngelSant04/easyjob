@@ -8,10 +8,10 @@ const routes: Routes = [
     path: '',
     component: LoginPage
   },
-  {
-    path: 'tabs',
-    loadChildren: () => import('../tabs/tabs.module').then(m => m.TabsPageModule)
-  },
+  // {
+  //   path: 'tabs',
+  //   loadChildren: () => import('../tabs/tabs.module').then(m => m.TabsPageModule)
+  // },
 ];
 
 @NgModule({

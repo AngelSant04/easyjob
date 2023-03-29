@@ -38,5 +38,23 @@ export class CategoriaService {
     return this.ejecutarQuery<any>(query);
 
   }
+
+  editarCategoria(query:string, obj:any){
+    query = URL + puerto + query;
   
+    return this.http.put<any>( query, obj );
+  }
+  
+  eliminarCategoria(query:string){
+    query = URL + puerto + query;
+    const obj = {}
+  
+    return this.http.post<any>( query, obj );
+  }
+
+  agregarCategoria(query:string, obj :any){
+    query = URL + puerto + query;
+  
+    return this.http.post<any>( query, obj );
+  }
 }

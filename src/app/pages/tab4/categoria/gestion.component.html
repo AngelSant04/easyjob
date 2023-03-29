@@ -1,0 +1,21 @@
+<ion-header class="ion-no-border" translucent>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button
+          defaultHref="/"
+          color="primary">
+        </ion-back-button>
+      </ion-buttons>
+  
+      <ion-title class="ion-text-capitalize ion-text-center">
+        Gestionar Categorias
+      </ion-title>
+
+      <ion-buttons slot="end">
+        <ion-icon slot="icon-only" name="add-outline" color="primary" (click)="agregarCategoria()"></ion-icon>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header> 
+<ion-content>
+    <app-listado-categorias [categorias]="categorias"></app-listado-categorias>
+</ion-content>

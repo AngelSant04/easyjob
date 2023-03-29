@@ -8,6 +8,7 @@ import { Tab4PageRoutingModule } from './tab4-routing.module';
 
 import { Tab4Page } from './tab4.page';
 import { ComponentsModule } from '../../components/components.module';
+import { GestionComponent } from './categoria/gestion.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { ComponentsModule } from '../../components/components.module';
     Tab4PageRoutingModule,
     ComponentsModule
   ],
-  declarations: [Tab4Page]
+  declarations: [Tab4Page,GestionComponent]
 })
 export class Tab4PageModule {}

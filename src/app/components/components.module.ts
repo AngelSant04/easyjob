@@ -13,6 +13,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { FormsModule } from '@angular/forms';
 import { ListadoTareasComponent } from './listado-tareas/listado-tareas.component';
 import { InfoRegistrarTareaComponent } from './info-registrar-tarea/info-registrar-tarea.component';
+import { ListadoCategoriasComponent } from './listado-categorias/listado-categorias.component';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -25,7 +26,8 @@ import { InfoRegistrarTareaComponent } from './info-registrar-tarea/info-registr
     AntecedenteComponent,
     PerfilComponent,
     ListadoTareasComponent,
-    InfoRegistrarTareaComponent
+    InfoRegistrarTareaComponent,
+    ListadoCategoriasComponent
   ],
   exports:[
     HeaderComponent,
@@ -33,7 +35,8 @@ import { InfoRegistrarTareaComponent } from './info-registrar-tarea/info-registr
     ListaTareaComponent,
     RevisarPostulantesComponent,
     ListadoTareasComponent,
-    InfoRegistrarTareaComponent
+    InfoRegistrarTareaComponent,
+    ListadoCategoriasComponent
   ],
   imports: [
     CommonModule,

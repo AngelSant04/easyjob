@@ -1,0 +1,22 @@
+<ion-grid class="ion-padding">
+  <ion-row class="ion-text-center"  *ngFor="let categoria of categorias">
+    <ion-col>
+      <ion-card style="border-radius: 10px; border: 1px solid var(--ion-color-primary);">
+        <ion-card-header>
+          <ion-card-title>{{categoria.id}} - {{ categoria.descripcion }}</ion-card-title>
+        </ion-card-header> 
+
+        <hr color="skyblue" noshade="noshade" size="2">
+        <ion-button fill="clear" (click)="editar(categoria)">
+          <ion-icon slot="start" style="font-size: 30px;" name="create-outline"></ion-icon>
+          Editar
+        </ion-button>
+        <ion-button fill="clear" (click)="eliminar(categoria.id)">
+          Eliminar
+          <ion-icon slot="start" style="font-size: 30px;" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+

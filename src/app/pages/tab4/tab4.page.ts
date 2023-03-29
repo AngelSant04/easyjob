@@ -9,6 +9,7 @@ import { StorageService } from '../../services/storage.service';
 import { PerfilComponent } from '../../components/perfil/perfil.component';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Preferences } from '@capacitor/preferences';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-tab4',
   templateUrl: './tab4.page.html',
@@ -23,6 +24,7 @@ export class Tab4Page implements OnInit {
     private storageSrv: StorageService,
     private alertCtrl: AlertController,
     private usuarioServ:UsuariosService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -76,6 +78,10 @@ export class Tab4Page implements OnInit {
       ],
     });
     await alert.present();
+  }
+
+  gestionCategorias(){
+    this.router.navigateByUrl('tabs/tab4/categoria')
   }
 
 }
